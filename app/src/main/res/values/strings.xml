@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">News Stories</string>
+    <string name="dog_reading_news">Dog reading news</string>
+    <string name="no_stories">No stories at the moment.</string>
+    <string name="poem">She went to the cobbler’s
+        \nTo buy him some shoes,
+        \nBut when she came back
+        \nHe was reading the news.</string>
+    <string name="poem_info">Mother Goose\'s nursery rhymes
+        \nPublisher: London, New York: George Routledge and Sons, 1877</string>
+    <string name="man_falling">Man falling of the chair.</string>
+    <string name="no_connection">No internet connection.</string>
+    <string name="illustrative_image">Illustrative image</string>
+    <string name="author_unknown">Author is unknown</string>
+    <string name="arts_and_design">Arts and design</string>
+    <string name="technology">Technology</string>
+    <string name="politics">Politics</string>
+    <string name="science">Science</string>
+    <string name="education">Education</string>
+    <string name="travel">Travel</string>
+    <string name="music">Music</string>
+    <string name="movies">Movies</string>
+    <string name="fashion">Fashion</string>
+    <string name="weather">Weather</string>
+    <string name="about_application">About application</string>
+    <string name="news_categories">News Categories</string>
+    <string name="choose_category">Choose category!</string>
+    <string name="drawer_opened">Navigation drawer opened</string>
+    <string name="drawer_closed">Navigation drawer closed</string>
+    <string name="settings">Settings</string>
+</resources>

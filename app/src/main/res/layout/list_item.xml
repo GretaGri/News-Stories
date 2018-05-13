@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_medium"
+    android:layout_marginRight="@dimen/margin_medium"
+    android:layout_marginLeft="@dimen/margin_medium"
+    android:layout_marginEnd="@dimen/margin_medium"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:clickable="true"
+    android:focusable="true"
+    card_view:cardCornerRadius="@dimen/corner_radius"
+    card_view:cardElevation="@dimen/card_elevation"
+    tools:context="com.example.android.newsstories.MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:foreground="@drawable/custom_selector">
+
+        <ImageView
+            android:id="@+id/story_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/illustrative_image"
+            android:scaleType="centerCrop"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/no_news" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_shape"
+            android:fontFamily="@font/alegreya"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/text_size_button"
+            android:textAllCaps="false"
+            android:textStyle="italic|bold"
+            android:padding="@dimen/padding_medium"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="@id/story_image"
+            tools:text="Fashion" />
+
+        <TextView
+            android:id="@+id/story_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:padding="@dimen/padding_medium"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="@dimen/text_size_heading"
+            android:textStyle="bold"
+            app:fontFamily="@font/alegreya"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/story_image"
+            tools:text="Very nice article read and enjoy with the long heading" />
+
+        <TextView
+            android:id="@+id/story_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorWhite"
+            android:maxLines="2"
+            android:padding="@dimen/padding_medium"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="@dimen/text_size_author"
+            android:textStyle="italic"
+            app:fontFamily="@font/alegreya"
+            app:layout_constraintHorizontal_bias="0.0"
+            card_view:layout_constraintEnd_toStartOf="@id/story_date"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/story_title"
+            tools:text="Name Surname" />
+
+        <TextView
+            android:id="@+id/story_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:maxLines="2"
+            android:padding="@dimen/padding_medium"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="@dimen/text_size_small"
+            app:fontFamily="@font/alegreya"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/story_title"
+            tools:text="2018-01-01\n20:00:00" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

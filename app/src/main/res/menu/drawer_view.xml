@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/technology"
+            android:title="@string/technology" />
+
+        <item
+            android:id="@+id/politics"
+            android:title="@string/politics" />
+
+        <item
+            android:id="@+id/science"
+            android:title="@string/science" />
+
+        <item
+            android:id="@+id/education"
+            android:title="@string/education" />
+
+        <item
+            android:id="@+id/travel"
+            android:title="@string/travel" />
+
+        <item
+            android:id="@+id/music"
+            android:title="@string/music" />
+
+        <item
+            android:id="@+id/arts_and_design"
+            android:title="@string/arts_and_design" />
+
+        <item
+            android:id="@+id/movies"
+            android:title="@string/movies" />
+
+        <item
+            android:id="@+id/fashion"
+            android:title="@string/fashion" />
+
+        <item
+            android:id="@+id/weather"
+            android:title="@string/weather" />
+    </group>
+    <group android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/about_application"
+            android:title="@string/about_application" />
+
+        <item
+            android:id="@+id/settings"
+            android:title="@string/settings" />
+    </group>
+</menu>

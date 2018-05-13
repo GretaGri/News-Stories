@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_header"
+    android:layout_width="@dimen/width_navigation_header_picture"
+    android:layout_height="@dimen/height_navigation_header_picture"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/nav_header_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/heading_samuel_zeller_unsplash" />
+
+    <TextView
+        android:id="@+id/nav_header_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/padding_medium"
+        android:text="@string/news_categories"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/colorDarkBlue"
+        android:gravity="center_horizontal"
+        android:fontFamily="@font/alegreya"
+        android:textStyle="bold"/>
+</RelativeLayout>
