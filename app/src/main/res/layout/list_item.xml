@@ -16,6 +16,7 @@
     android:focusable="true"
     card_view:cardCornerRadius="@dimen/corner_radius"
     card_view:cardElevation="@dimen/card_elevation"
+    android:background="@color/colorBackground"
     tools:context="com.example.android.newsstories.MainActivity">
 
     <android.support.constraint.ConstraintLayout
@@ -39,16 +40,15 @@
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_shape"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/hexagon"
             android:fontFamily="@font/alegreya"
             android:textColor="@color/colorText"
             android:textSize="@dimen/text_size_button"
             android:textAllCaps="false"
             android:textStyle="italic|bold"
-            android:padding="@dimen/padding_medium"
+            android:paddingLeft="@dimen/padding_max"
+            android:paddingRight="@dimen/padding_max"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="@id/story_image"
             tools:text="Fashion" />

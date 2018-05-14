@@ -170,9 +170,15 @@ public class QueryUtils {
 
                 String title = current.getString(Constants.WEB_TITLE);
                 String url = current.getString(Constants.WEB_URL);
-
-                JSONObject fields = current.getJSONObject(Constants.FIELDS);
-                String pictureUrl = fields.getString(Constants.THUMBNAIL);
+                JSONObject fields = null;
+               try {fields = current.getJSONObject(Constants.FIELDS);}
+               catch (JSONException e){
+                   Log.e(LOG_TAG, "Parsing problem, no value for Fields");
+               }
+                String pictureUrl;
+                if (fields!=null){
+                pictureUrl = fields.getString(Constants.THUMBNAIL);}
+                else {pictureUrl = context.getString(R.string.no_picture);}
 
                 JSONArray tags = current.getJSONArray(Constants.TAGS);
 

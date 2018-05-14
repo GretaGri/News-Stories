@@ -13,27 +13,32 @@ public class CategoryAdapter extends FragmentPagerAdapter {
     //Context of the app
     //private Context mContext;
    // private Bundle mBundle;
-    private Fragment mFragment;
+    private Fragment fragment;
+    private Bundle bundle;
+    private int positionInMenu;
 
 
     //@param fm is the fragment manager that will keep each fragment's state in the adapter
     //across swipes.
     //@param context is the context of the app.
 
-    public CategoryAdapter(Context context, FragmentManager fm) {
+    public CategoryAdapter(Context context, FragmentManager fm, Integer position) {
         super(fm);
        // mContext = context;
+      positionInMenu = position;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                //  mBundle = new Bundle();
-                //   mBundle.putInt(Utils.POSITION, 0);
-                mFragment = new NewsFragment();
-               // mFragment.setArguments(mBundle);
-                return mFragment;
+                  bundle = new Bundle();
+                  bundle.putInt(Constants.POSITION, 0);
+                  bundle.putString(Constants.URL_KEY,"");
+
+                fragment = new NewsFragment();
+               fragment.setArguments(bundle);
+                return fragment;
 
             // Supply a default return statement
             default:

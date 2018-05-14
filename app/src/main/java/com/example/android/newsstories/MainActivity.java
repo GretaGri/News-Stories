@@ -1,7 +1,13 @@
 package com.example.android.newsstories;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private TextView actionBarTitle;
+    private int position = 0;
+    private Fragment fragment;
+    private Bundle bundle;
+    //please add the API key in the gradle.properties like this:
+    //NewsStories_GuardianApiKey="your-key"
+    String apiKey = BuildConfig.ApiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +48,180 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the ListView for navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
         activityTitle = getTitle().toString();
         setupDrawer();
 
-        // Create an adapter that knows which fragment should be shown on each page
-        CategoryAdapter adapter = new CategoryAdapter(this, getSupportFragmentManager());
+        //Add fragment to fill first page when app opens - later might be replaced stared/bookmarked news
+        bundle = new Bundle();
+        bundle.putInt(Constants.POSITION, position);
+        bundle.putString(Constants.URL_KEY,
+                "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+        fragment = new NewsFragment();
+        fragment.setArguments(bundle);
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment).commit();
 
-        // Find the view pager that will allow the user to swipe between fragments
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        //set up the navigation menu to open selected news categories and another activities
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        drawerLayout.closeDrawers();
 
-        // Set the adapter onto the view pager
-        viewPager.setAdapter(adapter);
+                        // swap UI fragments
+                        switch (menuItem.getItemId()) {
+                            case R.id.technology:
+                                position = 0;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.law:
+                                position = 1;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=law&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.science:
+                                position = 2;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=science&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.education:
+                                position = 3;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=education&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.travel:
+                                position = 4;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=travel&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.music:
+                                position = 5;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=music&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.arts_and_design:
+                                position = 6;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=artanddesign&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.movies:
+                                position = 7;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=film&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.fashion:
+                                position = 8;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=fashion&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.crosswords:
+                                position = 9;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=crosswords&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.about_application:
+                                Intent about = new Intent (MainActivity.this, AboutApplicationActivity.class);
+                                startActivity(about);
+                                break;
+
+                            case R.id.settings:
+                                Intent set = new Intent (MainActivity.this, SettingsActivity.class);
+                                startActivity(set);
+                                break;
+
+                                default: position = 0;
+                                    bundle = new Bundle();
+                                    bundle.putInt(Constants.POSITION, position);
+                                    bundle.putString(Constants.URL_KEY,
+                                            "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                    fragment = new NewsFragment();
+                                    fragment.setArguments(bundle);
+                                    // Add the fragment to the 'fragment_container' FrameLayout
+                                    getSupportFragmentManager().beginTransaction()
+                                            .add(R.id.fragment_container, fragment).commit();
+                                break;
+                        }
+                        return true;}
+
+                });
+
     }
     //Helper method to set up drawer
     private void setupDrawer() {

@@ -26,8 +26,9 @@ import java.util.List;
  * Created by Greta Grigutė on 2018-05-09.
  */
 public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>> {
-    //please add the API key in the request url
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?section=artanddesign&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=";
+    //please add the API key in the gradle.properties like this:
+    //NewsStories_GuardianApiKey="your-key"
+    private String GUARDIAN_REQUEST_URL;
     private static final int NEWS_LOADER_ID = 1;
     public static final String LOG_TAG = NewsFragment.class.getSimpleName();
     boolean isWifiConn;
@@ -58,6 +59,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment, container, false);
 
+        GUARDIAN_REQUEST_URL = getArguments().getString(Constants.URL_KEY);
         recyclerView = rootView.findViewById(R.id.recycler_view);
        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

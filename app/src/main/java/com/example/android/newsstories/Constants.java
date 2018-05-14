@@ -4,6 +4,8 @@ package com.example.android.newsstories;
  * Created by Greta Grigutė on 2018-05-11.
  */
 public final class Constants {
+    public static final String POSITION = "position";
+    public static final String URL_KEY = "key";
     public static final String RESPONSE = "response";
     public static final String RESULTS = "results";
     public static final String WEB_TITLE = "webTitle";

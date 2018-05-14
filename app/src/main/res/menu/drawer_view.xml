@@ -8,8 +8,8 @@
             android:title="@string/technology" />
 
         <item
-            android:id="@+id/politics"
-            android:title="@string/politics" />
+            android:id="@+id/law"
+            android:title="@string/law" />
 
         <item
             android:id="@+id/science"
@@ -40,8 +40,8 @@
             android:title="@string/fashion" />
 
         <item
-            android:id="@+id/weather"
-            android:title="@string/weather" />
+            android:id="@+id/crosswords"
+            android:title="@string/crosswords" />
     </group>
     <group android:id="@+id/menu_bottom"
         android:checkableBehavior="single">
