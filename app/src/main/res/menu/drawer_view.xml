@@ -28,12 +28,12 @@
             android:title="@string/music" />
 
         <item
-            android:id="@+id/arts_and_design"
-            android:title="@string/arts_and_design" />
+            android:id="@+id/art_and_design"
+            android:title="@string/art_and_design" />
 
         <item
-            android:id="@+id/movies"
-            android:title="@string/movies" />
+            android:id="@+id/film"
+            android:title="@string/film" />
 
         <item
             android:id="@+id/fashion"

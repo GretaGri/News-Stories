@@ -17,7 +17,8 @@
     card_view:cardCornerRadius="@dimen/corner_radius"
     card_view:cardElevation="@dimen/card_elevation"
     android:background="@color/colorBackground"
-    tools:context="com.example.android.newsstories.MainActivity">
+    tools:context="com.example.android.newsstories.MainActivity"
+    tools:targetApi="21">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

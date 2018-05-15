@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction()
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
-                            case R.id.arts_and_design:
+                            case R.id.art_and_design:
                                 position = 6;
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction()
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
-                            case R.id.movies:
+                            case R.id.film:
                                 position = 7;
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);

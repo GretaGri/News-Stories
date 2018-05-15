@@ -1,12 +1,15 @@
 package com.example.android.newsstories;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,6 +52,10 @@ private Context context;
         }
         holder.date.setText(story.getDate());
         holder.category.setText(story.getCategory());
+        int categoryColor = getCategoryColor(story.getCategory());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+            holder.category.setBackgroundTintList(context.getResources().getColorStateList(categoryColor));// Do something for lollipop and above versions
+        }
         Log.d("StoryAdapter","Data set");
     }
 
@@ -66,7 +73,7 @@ private Context context;
         public TextView author;
         public ImageView picture;
         public TextView date;
-        public Button category;
+        public AppCompatButton category;
 
         public MyViewHolder(View view) {
             super(view);
@@ -80,6 +87,46 @@ private Context context;
     public void setNews(List<NewsStory> data) {
         newsStories.addAll(data);
         notifyDataSetChanged();
+    }
+
+    private int getCategoryColor(String category){
+        int categoryColor;
+        switch (category){
+            case "Technology":
+                categoryColor = R.color.colorTechnology;
+                break;
+            case "Law":
+                categoryColor = R.color.colorLaw;
+                break;
+            case "Science":
+                categoryColor = R.color.colorScience;
+                break;
+            case "Education":
+                categoryColor = R.color.colorEducation;
+                break;
+            case "Travel":
+                categoryColor = R.color.colorTravel;
+                break;
+            case "Music":
+                categoryColor = R.color.colorMusic;
+                break;
+            case "Art and design":
+                categoryColor = R.color.colorArt;
+                break;
+            case "Film":
+                categoryColor = R.color.colorFilm;
+                break;
+            case "Fashion":
+                categoryColor = R.color.colorFashion;
+                break;
+            case "Crosswords":
+                categoryColor = R.color.colorCrosswords;
+                break;
+            default:
+                categoryColor = R.color.colorPrimary;
+                break;
+        }
+        return categoryColor;
     }
 }
 

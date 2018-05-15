@@ -12,14 +12,12 @@
     <string name="no_connection">No internet connection.</string>
     <string name="illustrative_image">Illustrative image</string>
     <string name="author_unknown">Author is unknown</string>
-    <string name="arts_and_design">Arts and design</string>
     <string name="technology">Technology</string>
     <string name="law">Law</string>
     <string name="science">Science</string>
     <string name="education">Education</string>
     <string name="travel">Travel</string>
     <string name="music">Music</string>
-    <string name="movies">Movies</string>
     <string name="fashion">Fashion</string>
     <string name="crosswords">Crosswords</string>
     <string name="about_application">About application</string>
@@ -51,4 +49,6 @@
     <string name="email">greta.klimaite@gmail.com</string>
     <string name="feedback">Feedback about \"News Stories\" application</string>
     <string name="seetings_added">Settings will be added in Project Stage 2.</string>
+    <string name="film">Film</string>
+    <string name="art_and_design">Art and design</string>
 </resources>

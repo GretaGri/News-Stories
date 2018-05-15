@@ -7,4 +7,14 @@
     <color name="colorText">#F4E9CD</color>
     <color name="colorDarkBlue">#013926</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTechnology">#35FF69</color>
+    <color name="colorLaw">#494947</color>
+    <color name="colorScience">#FF773D</color>
+    <color name="colorEducation">#0B6E4F</color>
+    <color name="colorTravel">#44CCFF</color>
+    <color name="colorMusic">#7494EA</color>
+    <color name="colorArt">#D138BF</color>
+    <color name="colorFilm">#961D4E</color>
+    <color name="colorFashion">#FF1B1C</color>
+    <color name="colorCrosswords">#2B4162</color>
 </resources>
