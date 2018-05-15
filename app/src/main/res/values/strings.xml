@@ -36,6 +36,7 @@
         \n\n Photo used when no images available (modified - cropped, added text \"no images available\") - by Florian Klauer on https://unsplash.com
         \n\n<b>News source:</b> https://open-platform.theguardian.com, https://www.theguardian.com
         \n\n<b>Icons:</b> https://material.io/icons
+        \n\n<b>Main colors</b> used in app were generated with the help of https://coolors.co.
         \n\n<b>Custom ripple effect solution:</b>
         \nhttps://stackoverflow.com/questions/30931889/adding-ripple-effect-to-recyclerview-item/30933094#30933094
         \nand to be able to apply it on card view: https://stackoverflow.com/a/28041873/5770629
@@ -44,7 +45,13 @@
         \nhttp://saulmm.github.io/mastering-coordinator https://lab.getbase.com/introduction-to-coordinator-layout-on-android
         \n\n<b>Recycler view learning sources:</b>
         \nhttp://www.vogella.com/tutorials/AndroidRecyclerView/article.html
-        \nhttps://www.androidhive.info/2016/01/android-working-with-recycler-view\n\n
+        \nhttps://www.androidhive.info/2016/01/android-working-with-recycler-view
+        \n\n<b>Retrieving Android API version programmatically:</b>
+        \nhttps://stackoverflow.com/questions/3423754/retrieving-android-api-version-programmatically
+        \n\n<b>How to add button tint programmatically:</b>
+        \nhttps://stackoverflow.com/questions/29801031/how-to-add-button-tint-programmatically
+        \n\n<b>Solution for storing API key (note: in the build gradle file you have to take care of all build types!):</b>
+        \nhttps://medium.com/code-better/hiding-api-keys-from-your-android-repository-b23f5598b906
         </string>
     <string name="email">greta.klimaite@gmail.com</string>
     <string name="feedback">Feedback about \"News Stories\" application</string>

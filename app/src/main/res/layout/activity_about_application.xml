@@ -38,7 +38,6 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/picture_height_about_app"
-            android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
             android:src="@drawable/author_picture"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
@@ -47,20 +46,21 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
             android:id="@+id/about_application_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_max"
+            android:paddingBottom="@dimen/padding_max_top_bottom"
+            android:paddingEnd="@dimen/padding_max"
+            android:paddingRight="@dimen/padding_max"
+            android:paddingStart="@dimen/padding_max"
+            android:paddingLeft="@dimen/padding_max"
+            android:paddingTop="@dimen/padding_max_top_bottom"
             android:autoLink="web"
             android:fontFamily="@font/alegreya"
             android:linksClickable="true"
