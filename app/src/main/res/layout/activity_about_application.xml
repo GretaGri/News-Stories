@@ -9,6 +9,7 @@
 
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -17,7 +18,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="?attr/colorPrimary">
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            >
 
             <TextView
                 android:id="@+id/custom_title"
@@ -31,6 +34,47 @@
                 app:fontFamily="@font/alegreya" />
 
         </android.support.v7.widget.Toolbar>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/picture_height_about_app"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/author_picture"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            android:contentDescription="@string/author_image" />
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/about_application_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_top_max"
+            android:autoLink="web"
+            android:fontFamily="@font/alegreya"
+            android:linksClickable="true"
+            android:text="@string/about_app_description"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/text_size_message" />
+
+    </android.support.v4.widget.NestedScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 </android.support.design.widget.CoordinatorLayout>

@@ -29,4 +29,26 @@
     <string name="drawer_closed">Navigation drawer closed</string>
     <string name="settings">Settings</string>
     <string name="no_picture">no picture</string>
+    <string name="author_image">Author image</string>
+    <string name="about_app_description">Application created by Greta Grigutė as part of
+        Google developer Android Basics Nanodegree, 6th project.
+        \n\n<b>Pictures:</b>
+        \n\n Illustrations used for \"no internet\" and \"no stories\" images from https://www.oldbookillustrations.com/illustrations
+        \n\n Photo in Drawer heading (modified - cropped) by Samuel Zeller on https://unsplash.com
+        \n\n Photo used when no images available (modified - cropped, added text \"no images available\") - by Florian Klauer on https://unsplash.com
+        \n\n<b>News source:</b> https://open-platform.theguardian.com, https://www.theguardian.com
+        \n\n<b>Icons:</b> https://material.io/icons
+        \n\n<b>Custom ripple effect solution:</b>
+        \nhttps://stackoverflow.com/questions/30931889/adding-ripple-effect-to-recyclerview-item/30933094#30933094
+        \nand to be able to apply it on card view: https://stackoverflow.com/a/28041873/5770629
+        \n\n<b>Coordinator layout learning sources:</b>
+        \nhttps://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html
+        \nhttp://saulmm.github.io/mastering-coordinator https://lab.getbase.com/introduction-to-coordinator-layout-on-android
+        \n\n<b>Recycler view learning sources:</b>
+        \nhttp://www.vogella.com/tutorials/AndroidRecyclerView/article.html
+        \nhttps://www.androidhive.info/2016/01/android-working-with-recycler-view\n\n
+        </string>
+    <string name="email">greta.klimaite@gmail.com</string>
+    <string name="feedback">Feedback about \"News Stories\" application</string>
+    <string name="seetings_added">Settings will be added in Project Stage 2.</string>
 </resources>

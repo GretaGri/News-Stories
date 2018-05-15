@@ -15,4 +15,6 @@
     <dimen name="card_elevation">8dp</dimen>
     <dimen name="width_navigation_header_picture">260dp</dimen>
     <dimen name="height_navigation_header_picture">160dp</dimen>
+    <dimen name="picture_height_about_app">200dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -24,8 +24,22 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".AboutApplicationActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".AboutApplicationActivity"
+            android:parentActivityName=".MainActivity">
+
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>
