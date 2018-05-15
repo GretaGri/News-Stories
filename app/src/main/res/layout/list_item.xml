@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
             android:background="@drawable/hexagon"
+            android:backgroundTint="@color/colorBackground"
             android:fontFamily="@font/alegreya"
             android:textColor="@color/colorText"
             android:textSize="@dimen/text_size_button"

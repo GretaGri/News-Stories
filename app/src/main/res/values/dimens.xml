@@ -17,4 +17,5 @@
     <dimen name="height_navigation_header_picture">160dp</dimen>
     <dimen name="picture_height_about_app">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_max">30dp</dimen>
 </resources>

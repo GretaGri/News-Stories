@@ -60,7 +60,7 @@
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
             android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_top_max"
+            android:layout_marginTop="@dimen/margin_max"
             android:autoLink="web"
             android:fontFamily="@font/alegreya"
             android:linksClickable="true"
