@@ -34,12 +34,15 @@
         \n\n Illustrations used for \"no internet\" and \"no stories\" images from https://www.oldbookillustrations.com/illustrations
         \n\n Photo in Drawer heading (modified - cropped) by Samuel Zeller on https://unsplash.com
         \n\n Photo used when no images available (modified - cropped, added text \"no images available\") - by Florian Klauer on https://unsplash.com
+        \n\n Image for App icon -  modified, Newspapers from https://www.publicdomainpictures.net
         \n\n<b>News source:</b> https://open-platform.theguardian.com, https://www.theguardian.com
         \n\n<b>Icons:</b> https://material.io/icons
         \n\n<b>Main colors</b> used in app were generated with the help of https://coolors.co.
         \n\n<b>Custom ripple effect solution:</b>
         \nhttps://stackoverflow.com/questions/30931889/adding-ripple-effect-to-recyclerview-item/30933094#30933094
         \nand to be able to apply it on card view: https://stackoverflow.com/a/28041873/5770629
+        \n\n<b>Hexagon shape solution for Categories button:</b>
+        \nhttps://stackoverflow.com/questions/37296863/how-to-create-hexagon-shape-in-xml-format
         \n\n<b>Coordinator layout learning sources:</b>
         \nhttps://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html
         \nhttp://saulmm.github.io/mastering-coordinator https://lab.getbase.com/introduction-to-coordinator-layout-on-android
@@ -58,4 +61,5 @@
     <string name="seetings_added">Settings will be added in Project Stage 2.</string>
     <string name="film">Film</string>
     <string name="art_and_design">Art and design</string>
+    <string name="contentdesc_mailbox">Image with mailbox full of newspapers</string>
 </resources>

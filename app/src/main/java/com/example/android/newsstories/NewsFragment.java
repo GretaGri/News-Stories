@@ -12,7 +12,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +25,12 @@ import java.util.List;
  * Created by Greta Grigutė on 2018-05-09.
  */
 public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>> {
+    private static final int NEWS_LOADER_ID = 1;
+    boolean isWifiConn;
+    boolean isMobileConn;
     //please add the API key in the gradle.properties like this:
     //NewsStories_GuardianApiKey="your-key"
     private String GUARDIAN_REQUEST_URL;
-    private static final int NEWS_LOADER_ID = 1;
-    public static final String LOG_TAG = NewsFragment.class.getSimpleName();
-    boolean isWifiConn;
-    boolean isMobileConn;
     private RecyclerView recyclerView;
     private StoryAdapter adapter;
     private RelativeLayout empty;
@@ -61,7 +59,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
         GUARDIAN_REQUEST_URL = getArguments().getString(Constants.URL_KEY);
         recyclerView = rootView.findViewById(R.id.recycler_view);
-       RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -74,7 +72,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         recyclerView.setAdapter(adapter);
-// Find a reference to the no stories layout {@link RelativeLayout} in the layout
+        // Find a reference to the no stories layout {@link RelativeLayout} in the layout
         empty = rootView.findViewById(R.id.no_stories_layout);
         noInternet = rootView.findViewById(R.id.no_internet_layout);
         recyclerView.setVisibility(View.GONE);
@@ -100,18 +98,13 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
                     startActivity(intent);
                 }
             }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                //for future implementation stared item feature
-            }
         }));
 
         return rootView;
     }
+
     @Override
     public Loader<List<NewsStory>> onCreateLoader(int id, Bundle args) {
-        Log.d(LOG_TAG, "On create loader");
         return new StoryLoader(getActivity(), GUARDIAN_REQUEST_URL);
 
     }
@@ -120,7 +113,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoadFinished(Loader<List<NewsStory>> loader, List<NewsStory> newsStories) {
         // Clear the adapter of previous news data
         adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>());
-        Log.d(LOG_TAG, "On load finished, previous data cleared");
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (newsStories != null && !newsStories.isEmpty()) {
@@ -129,17 +121,15 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(adapter);
-            Log.d(LOG_TAG, "On load finished, new data set");
-        }else {
-        empty.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-        loadingSpinner.setVisibility(View.GONE);
-            Log.d(LOG_TAG, "On load finished, no data");}
+        } else {
+            empty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            loadingSpinner.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<List<NewsStory>> loader) {
-        Log.d(LOG_TAG, "On load, new data set");
         adapter.setNews(new ArrayList<NewsStory>());
     }
 }

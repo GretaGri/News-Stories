@@ -15,7 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,16 +31,7 @@ public class QueryUtils {
     }
 
     public static List<NewsStory> fetchNewsData(Context context,String requestUrl) {
-        /**
-         * FOR REVIEWER: Please use this, to force the background thread to pause execution and wait for 2 seconds so that we can see how spinner works.
-         try {
-         Thread.sleep(2000);
-         } catch (InterruptedException e) {
-         e.printStackTrace();
-         }
-         */
 
-        Log.d (LOG_TAG, "fetch News data");
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -138,11 +128,11 @@ public class QueryUtils {
         // Create an empty ArrayList that we can start adding stories to
         List<NewsStory> newsStories = new ArrayList<>();
 
-        // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
+        // Try to parse the JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
-            // Convert SAMPLE_JSON_RESPONSE String into a JSONObject
+            // Convert JSON_RESPONSE String into a JSONObject
             JSONObject root = new JSONObject(jsonResponse);
 
             //Extract “response” Object
@@ -166,14 +156,13 @@ public class QueryUtils {
                     e.printStackTrace();
                 }
                 String dateReadyToShow = formatDate(dateformatted);
-                Log.d(LOG_TAG, "Date to show is:" + dateReadyToShow);
 
                 String title = current.getString(Constants.WEB_TITLE);
                 String url = current.getString(Constants.WEB_URL);
                 JSONObject fields = null;
                try {fields = current.getJSONObject(Constants.FIELDS);}
                catch (JSONException e){
-                   Log.e(LOG_TAG, "Parsing problem, no value for Fields");
+                   Log.e(LOG_TAG, "Parsing problem, no value for Fields, default picture will be shown");
                }
                 String pictureUrl;
                 if (fields!=null){
@@ -192,7 +181,6 @@ public class QueryUtils {
                 //add those values to arrayList
                 // FOR REVIEWER: comment out this line for checking, how my empty page works:)
                 newsStories.add(new NewsStory(pictureUrl, category, title, author, dateReadyToShow, url));
-                Log.d("LOG_TAG","Here are items added:"+pictureUrl+category+author+title+date+url);
             }
 
 
@@ -200,10 +188,10 @@ public class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the Guardian news JSON results", e);
+            Log.e(LOG_TAG, "Problem parsing the Guardian news JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of news
         return newsStories;
     }
     private static String formatDate (Date date){

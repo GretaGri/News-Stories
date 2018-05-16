@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.newsstories.MainActivity"
-    android:elevation="@dimen/margin_medium"
     tools:openDrawer="start">
 
     <android.support.design.widget.CoordinatorLayout
@@ -14,30 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="?attr/colorPrimary">
-
-        <TextView
-            android:id="@+id/custom_title"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_medium"
-            android:text="@string/app_name"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/text_size_title"
-            android:textStyle="bold"
-            app:fontFamily="@font/alegreya" />
+            android:fitsSystemWindows="true">
 
-    </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="?attr/colorPrimary">
+
+                <TextView
+                    android:id="@+id/custom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/text_size_title"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/alegreya" />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
@@ -48,14 +48,13 @@
         android:id="@+id/nav_view"
         android:layout_width="@dimen/width_navigation_header_picture"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:background="@color/colorPrimaryDark"
         android:clickable="true"
+        android:fitsSystemWindows="true"
         android:focusable="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/drawer_view"
-        />
+        app:menu="@menu/drawer_view" />
 
 </android.support.v4.widget.DrawerLayout>

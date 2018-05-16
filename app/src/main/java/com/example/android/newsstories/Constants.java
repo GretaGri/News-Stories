@@ -15,4 +15,14 @@ public final class Constants {
     public static final String FIELDS = "fields";
     public static final String THUMBNAIL = "thumbnail";
     public static final String TAGS = "tags";
-   }
+    public static final String TECHNOLOGY = "Technology";
+    public static final String LAW = "Law";
+    public static final String SCIENCE = "Science";
+    public static final String EDUCATION = "Education";
+    public static final String TRAVEL = "Travel";
+    public static final String MUSIC = "Music";
+    public static final String ART_AND_DESIGN = "Art and design";
+    public static final String FILM = "Film";
+    public static final String FASHION = "Fashion";
+    public static final String CROSSWORDS = "Crosswords";
+}

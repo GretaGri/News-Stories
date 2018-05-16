@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:id="@+id/menu_top"
+    <group
+        android:id="@+id/menu_top"
         android:checkableBehavior="single">
 
         <item
@@ -43,7 +44,8 @@
             android:id="@+id/crosswords"
             android:title="@string/crosswords" />
     </group>
-    <group android:id="@+id/menu_bottom"
+    <group
+        android:id="@+id/menu_bottom"
         android:checkableBehavior="single">
         <item
             android:id="@+id/about_application"

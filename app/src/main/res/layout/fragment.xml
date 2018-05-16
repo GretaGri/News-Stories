@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.newsstories.MainActivity">
@@ -97,15 +96,15 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="@color/colorBackground"
         android:clickable="true"
         android:focusable="true"
         android:scrollbars="vertical"
         tools:context=".MainActivity"
-        tools:showIn="@layout/activity_main"/>
+        tools:showIn="@layout/activity_main" />
 
     <ProgressBar
         android:id="@+id/loading_spinner"
@@ -113,9 +112,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="?android:attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

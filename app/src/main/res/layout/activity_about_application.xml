@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            >
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <TextView
                 android:id="@+id/custom_title"
@@ -34,14 +33,15 @@
                 app:fontFamily="@font/alegreya" />
 
         </android.support.v7.widget.Toolbar>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/picture_height_about_app"
+            android:contentDescription="@string/author_image"
             android:scaleType="centerCrop"
             android:src="@drawable/author_picture"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            android:contentDescription="@string/author_image" />
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -55,20 +55,21 @@
             android:id="@+id/about_application_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/padding_max_top_bottom"
-            android:paddingEnd="@dimen/padding_max"
-            android:paddingRight="@dimen/padding_max"
-            android:paddingStart="@dimen/padding_max"
-            android:paddingLeft="@dimen/padding_max"
-            android:paddingTop="@dimen/padding_max_top_bottom"
             android:autoLink="web"
             android:fontFamily="@font/alegreya"
             android:linksClickable="true"
+            android:paddingBottom="@dimen/padding_max_top_bottom"
+            android:paddingEnd="@dimen/padding_max"
+            android:paddingLeft="@dimen/padding_max"
+            android:paddingRight="@dimen/padding_max"
+            android:paddingStart="@dimen/padding_max"
+            android:paddingTop="@dimen/padding_max_top_bottom"
             android:text="@string/about_app_description"
             android:textColor="@color/colorText"
             android:textSize="@dimen/text_size_message" />
 
     </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

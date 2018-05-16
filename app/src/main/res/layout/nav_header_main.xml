@@ -15,18 +15,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/heading_samuel_zeller_unsplash" />
+        android:src="@drawable/heading_samuel_zeller_unsplash"
+        android:contentDescription="@string/contentdesc_mailbox" />
 
     <TextView
         android:id="@+id/nav_header_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:fontFamily="@font/alegreya"
+        android:gravity="center_horizontal"
         android:padding="@dimen/padding_medium"
         android:text="@string/news_categories"
-        android:textSize="@dimen/text_size_title"
         android:textColor="@color/colorDarkBlue"
-        android:gravity="center_horizontal"
-        android:fontFamily="@font/alegreya"
-        android:textStyle="bold"/>
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold" />
 </RelativeLayout>

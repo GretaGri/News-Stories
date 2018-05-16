@@ -37,6 +37,7 @@
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
@@ -47,13 +48,13 @@
         android:id="@+id/nav_view"
         android:layout_width="@dimen/width_navigation_header_picture"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:background="@color/colorPrimaryDark"
+        android:clickable="true"
+        android:fitsSystemWindows="true"
+        android:focusable="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/drawer_view"/>
+        app:menu="@menu/drawer_view" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,15 +1,11 @@
 package com.example.android.newsstories;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,12 +16,12 @@ import java.util.List;
 /**
  * Created by Greta Grigutė on 2018-05-10.
  */
-public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder>{
-private List<NewsStory> newsStories;
-private LayoutInflater inflater;
-private Context context;
+public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder> {
+    private List<NewsStory> newsStories;
+    private LayoutInflater inflater;
+    private Context context;
 
-    public StoryAdapter(Context context,List<NewsStory> newsStories) {
+    public StoryAdapter(Context context, List<NewsStory> newsStories) {
         this.newsStories = newsStories;
         inflater = LayoutInflater.from(context);
         this.context = context;
@@ -44,19 +40,17 @@ private Context context;
         NewsStory story = newsStories.get(position);
         holder.title.setText(story.getTitle());
         holder.author.setText(story.getAuthor());
-        if(story.getPicture().equals(context.getString(R.string.no_picture))){
+        if (story.getPicture().equals(context.getString(R.string.no_picture))) {
             holder.picture.setImageResource(R.drawable.no_picture_available);
-        }
-        else{
-        Picasso.get().load(story.getPicture()).into(holder.picture);
+        } else {
+            Picasso.get().load(story.getPicture()).into(holder.picture);
         }
         holder.date.setText(story.getDate());
         holder.category.setText(story.getCategory());
         int categoryColor = getCategoryColor(story.getCategory());
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             holder.category.setBackgroundTintList(context.getResources().getColorStateList(categoryColor));// Do something for lollipop and above versions
         }
-        Log.d("StoryAdapter","Data set");
     }
 
     @Override
@@ -66,6 +60,51 @@ private Context context;
 
     public NewsStory getItem(int position) {
         return newsStories.get(position);
+    }
+
+    public void setNews(List<NewsStory> data) {
+        newsStories.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    private int getCategoryColor(String category) {
+        int categoryColor;
+        switch (category) {
+            case Constants.TECHNOLOGY:
+                categoryColor = R.color.colorTechnology;
+                break;
+            case Constants.LAW:
+                categoryColor = R.color.colorLaw;
+                break;
+            case Constants.SCIENCE:
+                categoryColor = R.color.colorScience;
+                break;
+            case Constants.EDUCATION:
+                categoryColor = R.color.colorEducation;
+                break;
+            case Constants.TRAVEL:
+                categoryColor = R.color.colorTravel;
+                break;
+            case Constants.MUSIC:
+                categoryColor = R.color.colorMusic;
+                break;
+            case Constants.ART_AND_DESIGN:
+                categoryColor = R.color.colorArt;
+                break;
+            case Constants.FILM:
+                categoryColor = R.color.colorFilm;
+                break;
+            case Constants.FASHION:
+                categoryColor = R.color.colorFashion;
+                break;
+            case Constants.CROSSWORDS:
+                categoryColor = R.color.colorCrosswords;
+                break;
+            default:
+                categoryColor = R.color.colorPrimary;
+                break;
+        }
+        return categoryColor;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -83,50 +122,6 @@ private Context context;
             date = view.findViewById(R.id.story_date);
             category = view.findViewById(R.id.category);
         }
-    }
-    public void setNews(List<NewsStory> data) {
-        newsStories.addAll(data);
-        notifyDataSetChanged();
-    }
-
-    private int getCategoryColor(String category){
-        int categoryColor;
-        switch (category){
-            case "Technology":
-                categoryColor = R.color.colorTechnology;
-                break;
-            case "Law":
-                categoryColor = R.color.colorLaw;
-                break;
-            case "Science":
-                categoryColor = R.color.colorScience;
-                break;
-            case "Education":
-                categoryColor = R.color.colorEducation;
-                break;
-            case "Travel":
-                categoryColor = R.color.colorTravel;
-                break;
-            case "Music":
-                categoryColor = R.color.colorMusic;
-                break;
-            case "Art and design":
-                categoryColor = R.color.colorArt;
-                break;
-            case "Film":
-                categoryColor = R.color.colorFilm;
-                break;
-            case "Fashion":
-                categoryColor = R.color.colorFashion;
-                break;
-            case "Crosswords":
-                categoryColor = R.color.colorCrosswords;
-                break;
-            default:
-                categoryColor = R.color.colorPrimary;
-                break;
-        }
-        return categoryColor;
     }
 }
 

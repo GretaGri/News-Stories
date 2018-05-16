@@ -1,14 +1,11 @@
 package com.example.android.newsstories;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,15 +16,15 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
+    //please add the API key in the gradle.properties like this:
+    //NewsStories_GuardianApiKey="your-key"
+    String apiKey = BuildConfig.ApiKey;
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private TextView actionBarTitle;
     private int position = 0;
     private Fragment fragment;
     private Bundle bundle;
-    //please add the API key in the gradle.properties like this:
-    //NewsStories_GuardianApiKey="your-key"
-    String apiKey = BuildConfig.ApiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         actionBarTitle = findViewById(R.id.custom_title);
 
-        //Set the ListView for navigation drawer
+        //Set up navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         activityTitle = getTitle().toString();
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         bundle = new Bundle();
         bundle.putInt(Constants.POSITION, position);
         bundle.putString(Constants.URL_KEY,
-                "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
         fragment = new NewsFragment();
         fragment.setArguments(bundle);
         // Add the fragment to the 'fragment_container' FrameLayout
@@ -81,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=law&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=law&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -105,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=science&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=science&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -117,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=education&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=education&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=travel&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=travel&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -141,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=music&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=music&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -153,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=artanddesign&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=artanddesign&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -165,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=film&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=film&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -177,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=fashion&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=fashion&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -189,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle = new Bundle();
                                 bundle.putInt(Constants.POSITION, position);
                                 bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=crosswords&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
+                                        "https://content.guardianapis.com/search?section=crosswords&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -197,32 +194,35 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.about_application:
-                                Intent about = new Intent (MainActivity.this, AboutApplicationActivity.class);
+                                Intent about = new Intent(MainActivity.this, AboutApplicationActivity.class);
                                 startActivity(about);
                                 break;
 
                             case R.id.settings:
-                                Intent set = new Intent (MainActivity.this, SettingsActivity.class);
+                                Intent set = new Intent(MainActivity.this, SettingsActivity.class);
                                 startActivity(set);
                                 break;
 
-                                default: position = 0;
-                                    bundle = new Bundle();
-                                    bundle.putInt(Constants.POSITION, position);
-                                    bundle.putString(Constants.URL_KEY,
-                                            "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key="+apiKey);
-                                    fragment = new NewsFragment();
-                                    fragment.setArguments(bundle);
-                                    // Add the fragment to the 'fragment_container' FrameLayout
-                                    getSupportFragmentManager().beginTransaction()
-                                            .add(R.id.fragment_container, fragment).commit();
+                            default:
+                                position = 0;
+                                bundle = new Bundle();
+                                bundle.putInt(Constants.POSITION, position);
+                                bundle.putString(Constants.URL_KEY,
+                                        "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
                                 break;
                         }
-                        return true;}
+                        return true;
+                    }
 
                 });
 
     }
+
     //Helper method to set up drawer
     private void setupDrawer() {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 // Set a new title for the Action Bar
-               actionBarTitle.setText(R.string.choose_category);
+                actionBarTitle.setText(R.string.choose_category);
 
                 // Create call to onPrepareOptionsMenu() in case it needs to be recreated with
                 // different options for when the navigation drawer is open
@@ -247,14 +247,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         drawerToggle.setDrawerIndicatorEnabled(true);
-       drawerLayout.addDrawerListener(drawerToggle);
+        drawerLayout.addDrawerListener(drawerToggle);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-       drawerToggle.syncState();
+        drawerToggle.syncState();
     }
 
     @Override
@@ -268,9 +268,6 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
         // Activate the navigation drawer toggle
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
