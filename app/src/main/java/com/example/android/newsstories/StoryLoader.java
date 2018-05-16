@@ -10,11 +10,9 @@ import java.util.List;
  */
 public class StoryLoader extends AsyncTaskLoader<List<NewsStory>> {
     private String url;
-    private Context context;
 
     public StoryLoader(Context context, String url) {
         super(context);
-        this.context = context;
         this.url = url;
     }
 
@@ -29,7 +27,7 @@ public class StoryLoader extends AsyncTaskLoader<List<NewsStory>> {
             return null;
         }
 
-        List<NewsStory> newsStories = QueryUtils.fetchNewsData(context, url);
+        List<NewsStory> newsStories = QueryUtils.fetchNewsData(url);
 
         return newsStories;
     }

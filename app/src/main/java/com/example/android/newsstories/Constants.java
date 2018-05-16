@@ -25,4 +25,6 @@ public final class Constants {
     public static final String FILM = "Film";
     public static final String FASHION = "Fashion";
     public static final String CROSSWORDS = "Crosswords";
+    public static final String NO_PICTURE = "no picture";
+    public static final String NO_AUTHOR = "no author";
 }

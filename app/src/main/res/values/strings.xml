@@ -26,7 +26,6 @@
     <string name="drawer_opened">Navigation drawer opened</string>
     <string name="drawer_closed">Navigation drawer closed</string>
     <string name="settings">Settings</string>
-    <string name="no_picture">no picture</string>
     <string name="author_image">Author image</string>
     <string name="about_app_description">Application created by Greta Grigutė as part of
         Google developer Android Basics Nanodegree, 6th project.

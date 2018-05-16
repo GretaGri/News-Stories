@@ -39,8 +39,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         NewsStory story = newsStories.get(position);
         holder.title.setText(story.getTitle());
-        holder.author.setText(story.getAuthor());
-        if (story.getPicture().equals(context.getString(R.string.no_picture))) {
+        if (story.getAuthor().equals(Constants.NO_AUTHOR)){
+            holder.author.setText(R.string.author_unknown);
+        } else {
+            holder.author.setText(story.getAuthor());
+        }
+        if (story.getPicture().equals(Constants.NO_PICTURE)) {
             holder.picture.setImageResource(R.drawable.no_picture_available);
         } else {
             Picasso.get().load(story.getPicture()).into(holder.picture);

@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Greta Grigutė on 2018-05-10.
@@ -30,7 +32,7 @@ public class QueryUtils {
     private QueryUtils() {
     }
 
-    public static List<NewsStory> fetchNewsData(Context context,String requestUrl) {
+    public static List<NewsStory> fetchNewsData(String requestUrl) {
 
         // Create URL object
         URL url = createUrl(requestUrl);
@@ -44,7 +46,7 @@ public class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create an object
-        List<NewsStory> story = extractNews(context,jsonResponse);
+        List<NewsStory> story = extractNews(jsonResponse);
 
         // Return the {@link story}
         return story;
@@ -123,7 +125,7 @@ public class QueryUtils {
      * Return a list of {@link NewsStory} objects that has been built up from
      * parsing a JSON response.
      */
-    public static List<NewsStory> extractNews(Context context, String jsonResponse) {
+    public static List<NewsStory> extractNews(String jsonResponse) {
 
         // Create an empty ArrayList that we can start adding stories to
         List<NewsStory> newsStories = new ArrayList<>();
@@ -148,7 +150,8 @@ public class QueryUtils {
                 String category = current.getString(Constants.SECTION_NAME);
                 String date = current.getString(Constants.WEB_PUBLICATION_DATE);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'", Locale.UK);
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
                 Date dateformatted = null;
                 try {
                     dateformatted = simpleDateFormat.parse(date);
@@ -167,7 +170,7 @@ public class QueryUtils {
                 String pictureUrl;
                 if (fields!=null){
                 pictureUrl = fields.getString(Constants.THUMBNAIL);}
-                else {pictureUrl = context.getString(R.string.no_picture);}
+                else {pictureUrl = Constants.NO_PICTURE;}
 
                 JSONArray tags = current.getJSONArray(Constants.TAGS);
 
@@ -175,7 +178,7 @@ public class QueryUtils {
                 if(tags.length()>0){
                     JSONObject currentTag = tags.getJSONObject(0);
                     author = currentTag.getString(Constants.WEB_TITLE);}
-                    else author = context.getString(R.string.author_unknown);
+                    else author = Constants.NO_AUTHOR;
 
 
                 //add those values to arrayList
@@ -195,7 +198,8 @@ public class QueryUtils {
         return newsStories;
     }
     private static String formatDate (Date date){
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MMM dd, yyyy'\n'hh:mm:ss");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("MMM dd, yyyy'\n'hh:mm:ss",Locale.UK);
+        newDateFormat.setTimeZone(TimeZone.getDefault());
         String formattedDate = newDateFormat.format(date);
         return formattedDate;}
 }
