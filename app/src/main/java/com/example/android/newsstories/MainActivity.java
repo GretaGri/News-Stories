@@ -1,6 +1,7 @@
 package com.example.android.newsstories;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -62,6 +65,28 @@ public class MainActivity extends AppCompatActivity {
 
         //set up the navigation menu to open selected news categories and another activities
         NavigationView navigationView = findViewById(R.id.nav_view);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Menu menu = navigationView.getMenu();
+       if(!sharedPreferences.getBoolean(getString(R.string.technology),true)){
+           menu.getItem(0).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.law),true)){
+            menu.getItem(1).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.science),true)){
+            menu.getItem(2).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.education),true)){
+            menu.getItem(3).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.travel),true)){
+            menu.getItem(4).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.music),true)){
+            menu.getItem(5).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.art_and_design),true)){
+            menu.getItem(6).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.film),true)){
+            menu.getItem(7).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.fashion),true)){
+            menu.getItem(8).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.crosswords),true)){
+            menu.getItem(9).setVisible(false);}
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

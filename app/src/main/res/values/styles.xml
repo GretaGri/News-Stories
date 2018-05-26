@@ -9,6 +9,7 @@
         <item name="android:fontFamily">@font/alegreya</item>
         <item name="android:textSize">@dimen/text_size_title</item>
         <item name="android:textColor">@color/colorText</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
 </resources>

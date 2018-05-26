@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Choose News Stories Categories">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/show_all"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="Show all categories" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/technology"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/technology" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/law"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/law" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/science"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/science" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/education"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/education" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/travel"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/travel" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/music"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/music" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/art_and_design"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/art_and_design" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/film"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/film" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/fashion"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/fashion" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/crosswords"
+            android:summaryOff="Hidden"
+            android:summaryOn="Show"
+            android:title="@string/crosswords" />
+    </PreferenceCategory>
+</PreferenceScreen>

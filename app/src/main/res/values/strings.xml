@@ -61,4 +61,8 @@
     <string name="film">Film</string>
     <string name="art_and_design">Art and design</string>
     <string name="contentdesc_mailbox">Image with mailbox full of newspapers</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="show_all">show_all</string>
 </resources>
