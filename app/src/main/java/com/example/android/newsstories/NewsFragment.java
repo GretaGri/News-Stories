@@ -44,12 +44,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Check the device network connection
-        ConnectivityManager connManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        isWifiConn = networkInfo.isConnected();
-        networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        isMobileConn = networkInfo.isConnected();
     }
 
     @Override
@@ -78,7 +72,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         recyclerView.setVisibility(View.GONE);
         empty.setVisibility(View.VISIBLE);
 
-        if (!isWifiConn && !isMobileConn) {
+        if ( !isInternetConn() ) {
             loadingSpinner.setVisibility(View.GONE);
             noInternet.setVisibility(View.VISIBLE);
         } else {
@@ -122,14 +116,33 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(adapter);
         } else {
-            empty.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            loadingSpinner.setVisibility(View.GONE);
+            if (!isInternetConn()) {
+                recyclerView.setVisibility(View.GONE);
+                loadingSpinner.setVisibility(View.GONE);
+                noInternet.setVisibility(View.VISIBLE);
+            } else {
+                empty.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                loadingSpinner.setVisibility(View.GONE);
+            }
         }
     }
+
 
     @Override
     public void onLoaderReset(Loader<List<NewsStory>> loader) {
         adapter.setNews(new ArrayList<NewsStory>());
+    }
+
+    private boolean isInternetConn() {
+        //Check the device network connection
+        ConnectivityManager connManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        isWifiConn = networkInfo.isConnected();
+        networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        isMobileConn = networkInfo.isConnected();
+        boolean isConnected = false;
+        if(isWifiConn||isMobileConn){ isConnected = true;}
+        return isConnected;
     }
 }
