@@ -25,6 +25,16 @@ public final class Constants {
     public static final String FILM = "Film";
     public static final String FASHION = "Fashion";
     public static final String CROSSWORDS = "Crosswords";
+    public static final String TECHNOLOGY_TAG = "technology";
+    public static final String LAW_TAG = "law";
+    public static final String SCIENCE_TAG = "science";
+    public static final String EDUCATION_TAG = "education";
+    public static final String TRAVEL_TAG = "travel";
+    public static final String MUSIC_TAG = "music";
+    public static final String ART_AND_DESIGN_TAG = "artanddesign";
+    public static final String FILM_TAG = "film";
+    public static final String FASHION_TAG = "fashion";
+    public static final String CROSSWORDS_TAG = "crosswords";
     public static final String NO_PICTURE = "no picture";
     public static final String NO_AUTHOR = "no author";
 }

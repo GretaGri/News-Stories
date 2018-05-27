@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,13 +23,16 @@ public class MainActivity extends AppCompatActivity {
     //please add the API key in the gradle.properties like this:
     //NewsStories_GuardianApiKey="your-key"
     String apiKey = BuildConfig.ApiKey;
+    private static final String GUARDIAN_API_URL= "https://content.guardianapis.com/search";
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private TextView actionBarTitle;
     private int position = 0;
     private Fragment fragment;
     private Bundle bundle;
-
+    private Uri.Builder uriBuilder;
+    private String section;
+    private String url_without_section;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +56,25 @@ public class MainActivity extends AppCompatActivity {
         activityTitle = getTitle().toString();
         setupDrawer();
 
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(GUARDIAN_API_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+       uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value. For example, the `format=geojson`
+        uriBuilder.appendQueryParameter("format", "json");
+        uriBuilder.appendQueryParameter("from-date", "2018-01-01");
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("show-fields", "thumbnail");
+        uriBuilder.appendQueryParameter("order-by", "newest");
+        uriBuilder.appendQueryParameter("api-key", apiKey);
+        url_without_section = uriBuilder.toString();
+
         //Add fragment to fill first page when app opens - later might be replaced stared/bookmarked news
         bundle = new Bundle();
         bundle.putInt(Constants.POSITION, position);
-        bundle.putString(Constants.URL_KEY,
-                "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+        bundle.putString(Constants.URL_KEY,url_without_section);
         fragment = new NewsFragment();
         fragment.setArguments(bundle);
         // Add the fragment to the 'fragment_container' FrameLayout
@@ -68,25 +86,25 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         Menu menu = navigationView.getMenu();
        if(!sharedPreferences.getBoolean(getString(R.string.technology),true)){
-           menu.getItem(0).setVisible(false);}
+           menu.getItem(1).setVisible(false);}
         if(!sharedPreferences.getBoolean(getString(R.string.law),true)){
-            menu.getItem(1).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.science),true)){
             menu.getItem(2).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.education),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.science),true)){
             menu.getItem(3).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.travel),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.education),true)){
             menu.getItem(4).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.music),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.travel),true)){
             menu.getItem(5).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.art_and_design),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.music),true)){
             menu.getItem(6).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.film),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.art_and_design),true)){
             menu.getItem(7).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.fashion),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.film),true)){
             menu.getItem(8).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.crosswords),true)){
+        if(!sharedPreferences.getBoolean(getString(R.string.fashion),true)){
             menu.getItem(9).setVisible(false);}
+        if(!sharedPreferences.getBoolean(getString(R.string.crosswords),true)){
+            menu.getItem(10).setVisible(false);}
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -98,12 +116,20 @@ public class MainActivity extends AppCompatActivity {
 
                         // swap UI fragments
                         switch (menuItem.getItemId()) {
-                            case R.id.technology:
-                                position = 0;
+                            case R.id.home:
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                bundle.putString(Constants.URL_KEY,url_without_section);
+                                fragment = new NewsFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
+                            case R.id.technology:
+                                bundle = new Bundle();
+                                section = Constants.TECHNOLOGY_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -111,11 +137,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.law:
-                                position = 1;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=law&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.LAW_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -123,11 +148,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.science:
-                                position = 2;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=science&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.SCIENCE_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -135,11 +159,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.education:
-                                position = 3;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=education&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.EDUCATION_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -147,11 +170,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.travel:
-                                position = 4;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=travel&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.TRAVEL_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -159,11 +181,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.music:
-                                position = 5;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=music&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.MUSIC_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -171,11 +192,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.art_and_design:
-                                position = 6;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=artanddesign&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.ART_AND_DESIGN_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -183,11 +203,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.film:
-                                position = 7;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=film&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.FILM_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -195,11 +214,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.fashion:
-                                position = 8;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=fashion&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.FASHION_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -207,11 +225,10 @@ public class MainActivity extends AppCompatActivity {
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.crosswords:
-                                position = 9;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=crosswords&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                section = Constants.CROSSWORDS_TAG;
+                                uriBuilder.appendQueryParameter("section", section);
+                                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
@@ -223,17 +240,14 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(about);
                                 break;
 
-                            case R.id.settings:
-                                Intent set = new Intent(MainActivity.this, SettingsActivity.class);
-                                startActivity(set);
-                                break;
+                           // case R.id.settings:
+                           //     Intent set = new Intent(MainActivity.this, SettingsActivity.class);
+                            //    startActivity(set);
+                           //     break;
 
                             default:
-                                position = 0;
                                 bundle = new Bundle();
-                                bundle.putInt(Constants.POSITION, position);
-                                bundle.putString(Constants.URL_KEY,
-                                        "https://content.guardianapis.com/search?section=technology&format=json&from-date=2018-01-01&show-tags=contributor&show-fields=thumbnail&order-by=newest&api-key=" + apiKey);
+                                bundle.putString(Constants.URL_KEY, url_without_section);
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout

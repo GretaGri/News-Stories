@@ -5,6 +5,10 @@
         android:checkableBehavior="single">
 
         <item
+            android:id="@+id/home"
+            android:title="@string/home" />
+
+        <item
             android:id="@+id/technology"
             android:title="@string/technology" />
 
