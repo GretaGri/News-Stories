@@ -13,12 +13,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     DrawerLayout drawerLayout;
     //please add the API key in the gradle.properties like this:
     //NewsStories_GuardianApiKey="your-key"
@@ -27,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private TextView actionBarTitle;
-    private int position = 0;
     private Fragment fragment;
     private Bundle bundle;
     private Uri.Builder uriBuilder;
     private String section;
     private String url_without_section;
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         activityTitle = getTitle().toString();
         setupDrawer();
-
+        // get shared preferences and register shared preferences change listener
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         // parse breaks apart the URI string that's passed into its parameter
         Uri baseUri = Uri.parse(GUARDIAN_API_URL);
 
@@ -69,11 +72,12 @@ public class MainActivity extends AppCompatActivity {
         uriBuilder.appendQueryParameter("show-fields", "thumbnail");
         uriBuilder.appendQueryParameter("order-by", "newest");
         uriBuilder.appendQueryParameter("api-key", apiKey);
+
+
         url_without_section = uriBuilder.toString();
 
         //Add fragment to fill first page when app opens - later might be replaced stared/bookmarked news
         bundle = new Bundle();
-        bundle.putInt(Constants.POSITION, position);
         bundle.putString(Constants.URL_KEY,url_without_section);
         fragment = new NewsFragment();
         fragment.setArguments(bundle);
@@ -82,30 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, fragment).commit();
 
         //set up the navigation menu to open selected news categories and another activities
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Menu menu = navigationView.getMenu();
-       if(!sharedPreferences.getBoolean(getString(R.string.technology),true)){
-           menu.getItem(1).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.law),true)){
-            menu.getItem(2).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.science),true)){
-            menu.getItem(3).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.education),true)){
-            menu.getItem(4).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.travel),true)){
-            menu.getItem(5).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.music),true)){
-            menu.getItem(6).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.art_and_design),true)){
-            menu.getItem(7).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.film),true)){
-            menu.getItem(8).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.fashion),true)){
-            menu.getItem(9).setVisible(false);}
-        if(!sharedPreferences.getBoolean(getString(R.string.crosswords),true)){
-            menu.getItem(10).setVisible(false);}
-        navigationView.setNavigationItemSelectedListener(
+        navigationView = findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -128,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.technology:
                                 bundle = new Bundle();
                                 section = Constants.TECHNOLOGY_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -139,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.law:
                                 bundle = new Bundle();
                                 section = Constants.LAW_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -150,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.science:
                                 bundle = new Bundle();
                                 section = Constants.SCIENCE_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -161,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.education:
                                 bundle = new Bundle();
                                 section = Constants.EDUCATION_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -172,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.travel:
                                 bundle = new Bundle();
                                 section = Constants.TRAVEL_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -183,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.music:
                                 bundle = new Bundle();
                                 section = Constants.MUSIC_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -194,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.art_and_design:
                                 bundle = new Bundle();
                                 section = Constants.ART_AND_DESIGN_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -205,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.film:
                                 bundle = new Bundle();
                                 section = Constants.FILM_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -216,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.fashion:
                                 bundle = new Bundle();
                                 section = Constants.FASHION_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -227,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.crosswords:
                                 bundle = new Bundle();
                                 section = Constants.CROSSWORDS_TAG;
-                                uriBuilder.appendQueryParameter("section", section);
+                                uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
@@ -240,10 +222,10 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(about);
                                 break;
 
-                           // case R.id.settings:
-                           //     Intent set = new Intent(MainActivity.this, SettingsActivity.class);
-                            //    startActivity(set);
-                           //     break;
+                            case R.id.settings:
+                               Intent set = new Intent(MainActivity.this, SettingsActivity.class);
+                                startActivity(set);
+                                break;
 
                             default:
                                 bundle = new Bundle();
@@ -309,5 +291,58 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         // Activate the navigation drawer toggle
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.show_all))||key.equals(getString(R.string.technology_key))
+                ||key.equals(getString(R.string.law_key))||key.equals(getString(R.string.science_key))
+                ||key.equals(getString(R.string.education_key))||key.equals(getString(R.string.travel_key))
+                ||key.equals(getString(R.string.music_key))||key.equals(getString(R.string.art_and_design_key))
+                ||key.equals(getString(R.string.film_key))||key.equals(getString(R.string.fashion_key))
+                ||key.equals(getString(R.string.crosswords_key))) {
+            loadmenuFromSharedPreferences(sharedPreferences);
+        }
+    }
+    private void loadmenuFromSharedPreferences(SharedPreferences sharedPreferences) {
+        Menu menu = navigationView.getMenu();
+        if(!sharedPreferences.getBoolean(getString(R.string.technology_key),true)){
+            menu.getItem(1).setVisible(false);}
+            else menu.getItem(1).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.law_key),true)){
+            menu.getItem(2).setVisible(false);}
+        else menu.getItem(2).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.science_key),true)){
+            menu.getItem(3).setVisible(false);}
+        else menu.getItem(3).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.education_key),true)){
+            menu.getItem(4).setVisible(false);}
+        else menu.getItem(4).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.travel_key),true)){
+            menu.getItem(5).setVisible(false);}
+        else menu.getItem(5).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.music_key),true)){
+            menu.getItem(6).setVisible(false);}
+        else menu.getItem(6).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.art_and_design_key),true)){
+            menu.getItem(7).setVisible(false);}
+        else menu.getItem(7).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.film_key),true)){
+            menu.getItem(8).setVisible(false);}
+        else menu.getItem(8).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.fashion_key),true)){
+            menu.getItem(9).setVisible(false);}
+        else menu.getItem(9).setVisible(true);
+        if(!sharedPreferences.getBoolean(getString(R.string.crosswords_key),true)){
+            menu.getItem(10).setVisible(false);}
+        else menu.getItem(10).setVisible(true);
+    }
+
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+        // get shared preferences and unregister shared preferences change listener
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 }

@@ -51,6 +51,7 @@
         android:layout_gravity="start"
         android:layout_marginTop="?android:attr/actionBarSize"
         android:background="@color/colorPrimaryDark"
+        app:itemTextColor="@color/colorText"
         android:clickable="true"
         android:fitsSystemWindows="true"
         android:focusable="true"

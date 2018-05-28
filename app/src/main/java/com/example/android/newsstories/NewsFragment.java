@@ -2,6 +2,7 @@ package com.example.android.newsstories;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -9,9 +10,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +27,7 @@ import java.util.List;
 /**
  * Created by Greta Grigutė on 2018-05-09.
  */
-public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>> {
+public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>>, SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int NEWS_LOADER_ID = 1;
     boolean isWifiConn;
     boolean isMobileConn;
@@ -36,7 +39,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private RelativeLayout empty;
     private RelativeLayout noInternet;
     private ProgressBar loadingSpinner;
-
+    private String size;
+    private SharedPreferences sharedPreferences;
     public NewsFragment() {
         // Required empty public constructor
     }
@@ -44,6 +48,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -72,10 +78,13 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         recyclerView.setVisibility(View.GONE);
         empty.setVisibility(View.VISIBLE);
 
-        if ( !isInternetConn() ) {
+        if (!isInternetConn()) {
             loadingSpinner.setVisibility(View.GONE);
             noInternet.setVisibility(View.VISIBLE);
         } else {
+            // add users choosen number of news stories
+            size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
+
             getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
             noInternet.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
@@ -97,10 +106,19 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         return rootView;
     }
 
+
     @Override
     public Loader<List<NewsStory>> onCreateLoader(int id, Bundle args) {
-        return new StoryLoader(getActivity(), GUARDIAN_REQUEST_URL);
 
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value. For example, the `page-size=10`
+        uriBuilder.appendQueryParameter(Constants.PAGE_SIZE, size);
+        return new StoryLoader(getActivity(), uriBuilder.toString());
     }
 
     @Override
@@ -128,7 +146,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         }
     }
 
-
     @Override
     public void onLoaderReset(Loader<List<NewsStory>> loader) {
         adapter.setNews(new ArrayList<NewsStory>());
@@ -142,7 +159,30 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         isMobileConn = networkInfo.isConnected();
         boolean isConnected = false;
-        if(isWifiConn||isMobileConn){ isConnected = true;}
+        if (isWifiConn || isMobileConn) {
+            isConnected = true;
+        }
         return isConnected;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_number_key))) {
+            loadNumberOfNewsFromSharedPreferences(sharedPreferences);
+            Log.d("Newsfragment", "onsharedpreferences change listener gets called");
+        }
+    }
+
+    private void loadNumberOfNewsFromSharedPreferences(SharedPreferences sharedPreferences) {
+        size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
+        getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onDestroy () {
+        super.onDestroy();
+        // get shared preferences and unregister shared preferences change listener
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 }

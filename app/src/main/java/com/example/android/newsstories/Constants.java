@@ -37,4 +37,6 @@ public final class Constants {
     public static final String CROSSWORDS_TAG = "crosswords";
     public static final String NO_PICTURE = "no picture";
     public static final String NO_AUTHOR = "no author";
+    public static final String SECTION = "section";
+    public static final String PAGE_SIZE = "page-size";
 }

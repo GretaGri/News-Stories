@@ -1,81 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Choose News Stories Categories">
+    <PreferenceCategory android:title="@string/pref_choose_categories_title">
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="@string/pref_default_value_true"
             android:key="@string/show_all"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
-            android:title="Show all categories" />
+            android:layout="@layout/custom_checkbox_pref_parent_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
+            android:title="@string/pref_show_all_title" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/technology"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/technology_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:paddingLeft="@dimen/padding_medium"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/technology" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/law"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/law_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/law" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/science"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/science_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/science" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/education"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/education_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/education" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/travel"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/travel_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/travel" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/music"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/music_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/music" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/art_and_design"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/art_and_design_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/art_and_design" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/film"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/film_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/film" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/fashion"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/fashion_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/fashion" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/crosswords"
-            android:summaryOff="Hidden"
-            android:summaryOn="Show"
+            android:defaultValue="@string/pref_default_value_true"
+            android:key="@string/crosswords_key"
+            android:layout="@layout/custom_checkbox_preference_layout"
+            android:summaryOff="@string/pref_summary_off_hidden"
+            android:summaryOn="@string/pref_summary_on_show"
             android:title="@string/crosswords" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Customize your News Stories">
+        <EditTextPreference
+            android:defaultValue="@string/pref_number_default_value"
+            android:key="@string/pref_number_key"
+            android:title="@string/pref_number_title"
+            android:inputType="number" />
     </PreferenceCategory>
 </PreferenceScreen>
