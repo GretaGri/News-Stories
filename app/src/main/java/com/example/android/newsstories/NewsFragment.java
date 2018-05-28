@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +42,9 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private ProgressBar loadingSpinner;
     private String size;
     private SharedPreferences sharedPreferences;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+
     public NewsFragment() {
         // Required empty public constructor
     }
@@ -56,6 +60,14 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment, container, false);
+
+        swipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
+       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getLoaderManager().restartLoader(NEWS_LOADER_ID, null,NewsFragment.this);
+            }
+        });
 
         GUARDIAN_REQUEST_URL = getArguments().getString(Constants.URL_KEY);
         recyclerView = rootView.findViewById(R.id.recycler_view);
@@ -109,7 +121,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<List<NewsStory>> onCreateLoader(int id, Bundle args) {
-
         // parse breaks apart the URI string that's passed into its parameter
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
 
@@ -133,6 +144,9 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(adapter);
+
+            swipeRefreshLayout.setRefreshing(false);
+
         } else {
             if (!isInternetConn()) {
                 recyclerView.setVisibility(View.GONE);
