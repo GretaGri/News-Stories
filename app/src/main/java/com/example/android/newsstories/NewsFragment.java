@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -44,6 +45,9 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private String size;
     private SharedPreferences sharedPreferences;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean starred = false;
+    private String buildedUrl;
+    private boolean selectedToSwowCategory = false;
 
 
     public NewsFragment() {
@@ -95,7 +99,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             loadingSpinner.setVisibility(View.GONE);
             noInternet.setVisibility(View.VISIBLE);
         } else {
-            // add users choosen number of news stories
+            // add users chosen number of news stories
             size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
 
             getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
@@ -103,19 +107,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
-
-
-        //    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-        //        @Override
-        //       public void onClick(View view, int position) {
-        //            String url = adapter.getItem(position).getUrl();
-        //            if (url != null) {
-        //               Intent intent = new Intent(Intent.ACTION_VIEW,
-        //                        Uri.parse(url));
-        //               startActivity(intent);
-        //            }
-        //       }
-        //   }));
 
         return rootView;
     }
@@ -132,7 +123,50 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
                 }
                 break;
             case R.id.favorite:
-                Log.d("NewsFragment", "Onclick works");
+                ImageView star = view.findViewById(R.id.favorite);
+                if (!starred){
+                star.setImageResource(R.drawable.baseline_grade_black_24dp);
+                starred = true;
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Category_key",adapter.getItem(position).getCategory());
+                editor.putString("Author_key",adapter.getItem(position).getAuthor());
+                editor.putString("Title_key",adapter.getItem(position).getTitle());
+                editor.putString("Date_key",adapter.getItem(position).getDate());
+                editor.putString("Picture_key",adapter.getItem(position).getPicture());
+                editor.putString("Url_key",adapter.getItem(position).getUrl());
+                editor.putBoolean("Favorite_key",true);
+                editor.commit();
+                }else {
+                    star.setImageResource(R.drawable.outline_grade_black_24dp);
+                    starred = false;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("Favorite_key",false);
+                    editor.commit();
+                }
+
+                break;
+            case R.id.category:
+                selectedToSwowCategory = true;
+                String category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ","-");
+                if (category.equals("art-and-design")||category.equals("commentis-free")||category.equals("jobs-advice")||category.equals("life-and-style")||category.equals("the-guardian")||category.equals("the-observer"))
+                {category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ","");}
+                // parse breaks apart the URI string that's passed into its parameter
+                Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+                // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+               Uri.Builder uriBuilder = baseUri.buildUpon();
+               uriBuilder.appendQueryParameter(Constants.SECTION,category);
+               buildedUrl = uriBuilder.toString();
+               getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+                Log.d ("NewsFragment", "Onclick works, string is: "+ category);
+                break;
+
+            default:
+               url = adapter.getItem(position).getUrl();
+                if (url != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(url));
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -143,11 +177,12 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
 
         // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
-        Uri.Builder uriBuilder = baseUri.buildUpon();
+       Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Append query parameter and its value. For example, the `page-size=10`
         uriBuilder.appendQueryParameter(Constants.PAGE_SIZE, size);
-        return new StoryLoader(getActivity(), uriBuilder.toString());
+        if (!selectedToSwowCategory){buildedUrl =  uriBuilder.toString();}
+        return new StoryLoader(getActivity(), buildedUrl);
     }
 
     @Override
