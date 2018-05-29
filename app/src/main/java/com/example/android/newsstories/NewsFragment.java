@@ -28,7 +28,8 @@ import java.util.List;
 /**
  * Created by Greta Grigutė on 2018-05-09.
  */
-public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>>, SharedPreferences.OnSharedPreferenceChangeListener {
+public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>>,
+        SharedPreferences.OnSharedPreferenceChangeListener, StoryAdapter.ListItemClickListener {
     private static final int NEWS_LOADER_ID = 1;
     boolean isWifiConn;
     boolean isMobileConn;
@@ -79,7 +80,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         loadingSpinner = rootView.findViewById(R.id.loading_spinner);
 
         // Create a new {@link ArrayAdapter} of stories
-        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>());
+        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(),this);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
@@ -103,21 +104,32 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             recyclerView.setVisibility(View.VISIBLE);
         }
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                String url = adapter.getItem(position).getUrl();
-                if (url != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse(url));
-                    startActivity(intent);
-                }
-            }
-        }));
+
+
+    //    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+    //        @Override
+     //       public void onClick(View view, int position) {
+    //            String url = adapter.getItem(position).getUrl();
+    //            if (url != null) {
+     //               Intent intent = new Intent(Intent.ACTION_VIEW,
+    //                        Uri.parse(url));
+     //               startActivity(intent);
+    //            }
+     //       }
+     //   }));
 
         return rootView;
     }
 
+    @Override
+    public void onListItemClick(View view, int position) {
+        String url = adapter.getItem(position).getUrl();
+                    if (url != null) {
+                       Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(url));
+                       startActivity(intent);
+                  }
+    }
 
     @Override
     public Loader<List<NewsStory>> onCreateLoader(int id, Bundle args) {
@@ -135,11 +147,11 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onLoadFinished(Loader<List<NewsStory>> loader, List<NewsStory> newsStories) {
         // Clear the adapter of previous news data
-        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>());
+        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(),this);
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (newsStories != null && !newsStories.isEmpty()) {
-            adapter = new StoryAdapter(getActivity(), newsStories);
+            adapter = new StoryAdapter(getActivity(), newsStories,this);
             loadingSpinner.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);

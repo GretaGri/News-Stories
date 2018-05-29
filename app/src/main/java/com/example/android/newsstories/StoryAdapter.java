@@ -2,8 +2,11 @@ package com.example.android.newsstories;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,11 +23,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
     private List<NewsStory> newsStories;
     private LayoutInflater inflater;
     private Context context;
+    private final ListItemClickListener itemClickListener;
 
-    public StoryAdapter(Context context, List<NewsStory> newsStories) {
+    public StoryAdapter(Context context, List<NewsStory> newsStories, ListItemClickListener listener) {
         this.newsStories = newsStories;
         inflater = LayoutInflater.from(context);
         this.context = context;
+        itemClickListener = listener;
 
     }
 
@@ -111,12 +116,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         return categoryColor;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
         public TextView author;
         public ImageView picture;
         public TextView date;
         public AppCompatButton category;
+        public ImageView favorite;
+        public CardView cardView;
 
         public MyViewHolder(View view) {
             super(view);
@@ -125,7 +133,20 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
             picture = view.findViewById(R.id.story_image);
             date = view.findViewById(R.id.story_date);
             category = view.findViewById(R.id.category);
+            category.setOnClickListener(this);
+            favorite =  view.findViewById(R.id.favorite);
+            favorite.setOnClickListener(this);
+            cardView = view.findViewById(R.id.cardview);
+            cardView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onListItemClick(v, getLayoutPosition());
+        }
+    }
+    public interface ListItemClickListener {
+        void onListItemClick(View view, int position);
     }
 }
 

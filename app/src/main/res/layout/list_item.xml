@@ -12,6 +12,7 @@
     android:layout_marginStart="@dimen/margin_medium"
     android:layout_marginTop="@dimen/margin_small"
     android:background="@color/colorBackground"
+    android:id="@+id/cardview"
     android:clickable="true"
     android:focusable="true"
     card_view:cardCornerRadius="@dimen/corner_radius"
@@ -53,6 +54,16 @@
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="@id/story_image"
             tools:text="Fashion" />
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="@dimen/margin_medium"
+            android:src="@drawable/outline_grade_black_24dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="@id/story_image"
+            />
 
         <TextView
             android:id="@+id/story_title"
