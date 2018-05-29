@@ -63,10 +63,10 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         View rootView = inflater.inflate(R.layout.fragment, container, false);
 
         swipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
-       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getLoaderManager().restartLoader(NEWS_LOADER_ID, null,NewsFragment.this);
+                getLoaderManager().restartLoader(NEWS_LOADER_ID, null, NewsFragment.this);
             }
         });
 
@@ -80,7 +80,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         loadingSpinner = rootView.findViewById(R.id.loading_spinner);
 
         // Create a new {@link ArrayAdapter} of stories
-        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(),this);
+        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(), this);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
@@ -105,30 +105,36 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         }
 
 
-
-    //    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-    //        @Override
-     //       public void onClick(View view, int position) {
-    //            String url = adapter.getItem(position).getUrl();
-    //            if (url != null) {
-     //               Intent intent = new Intent(Intent.ACTION_VIEW,
-    //                        Uri.parse(url));
-     //               startActivity(intent);
-    //            }
-     //       }
-     //   }));
+        //    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        //        @Override
+        //       public void onClick(View view, int position) {
+        //            String url = adapter.getItem(position).getUrl();
+        //            if (url != null) {
+        //               Intent intent = new Intent(Intent.ACTION_VIEW,
+        //                        Uri.parse(url));
+        //               startActivity(intent);
+        //            }
+        //       }
+        //   }));
 
         return rootView;
     }
 
     @Override
     public void onListItemClick(View view, int position) {
-        String url = adapter.getItem(position).getUrl();
-                    if (url != null) {
-                       Intent intent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse(url));
-                       startActivity(intent);
-                  }
+        switch (view.getId()) {
+            case R.id.cardview:
+                String url = adapter.getItem(position).getUrl();
+                if (url != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(url));
+                    startActivity(intent);
+                }
+                break;
+            case R.id.favorite:
+                Log.d("NewsFragment", "Onclick works");
+                break;
+        }
     }
 
     @Override
@@ -147,11 +153,11 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onLoadFinished(Loader<List<NewsStory>> loader, List<NewsStory> newsStories) {
         // Clear the adapter of previous news data
-        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(),this);
+        adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(), this);
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (newsStories != null && !newsStories.isEmpty()) {
-            adapter = new StoryAdapter(getActivity(), newsStories,this);
+            adapter = new StoryAdapter(getActivity(), newsStories, this);
             loadingSpinner.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -205,7 +211,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     @Override
-    public void onDestroy () {
+    public void onDestroy() {
         super.onDestroy();
         // get shared preferences and unregister shared preferences change listener
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
