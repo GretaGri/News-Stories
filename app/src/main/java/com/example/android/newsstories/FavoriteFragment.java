@@ -123,7 +123,8 @@ Log.d("FavoriteFragment", "Array list size is : " + favorite.size());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("Favorite_key",false);
                     editor.commit();
-                favorite.remove(adapter.getItem(position));
+                favorite.remove(favorite.get(position));
+                adapter.notifyDataSetChanged();
                 break;
 
         case R.id.category:
