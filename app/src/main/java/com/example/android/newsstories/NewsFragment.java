@@ -47,7 +47,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean starred = false;
     private String buildedUrl;
-    private boolean selectedToSwowCategory = false;
+    private boolean selectedToShowCategory = false;
 
 
     public NewsFragment() {
@@ -102,11 +102,10 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             // add users chosen number of news stories
             size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
 
-            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
+            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);}
             noInternet.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-        }
 
         return rootView;
     }
@@ -134,7 +133,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
                 editor.putString("Date_key",adapter.getItem(position).getDate());
                 editor.putString("Picture_key",adapter.getItem(position).getPicture());
                 editor.putString("Url_key",adapter.getItem(position).getUrl());
-                editor.putBoolean("Favorite_key",true);
+                editor.putBoolean(getString(R.string.favorite_key),true);
+                editor.putString("Category_url_key",buildedUrl);
                 editor.commit();
                 }else {
                     star.setImageResource(R.drawable.outline_grade_black_24dp);
@@ -146,10 +146,13 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
                 break;
             case R.id.category:
-                selectedToSwowCategory = true;
+                selectedToShowCategory = true;
                 String category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ","-");
                 if (category.equals("art-and-design")||category.equals("commentis-free")||category.equals("jobs-advice")||category.equals("life-and-style")||category.equals("the-guardian")||category.equals("the-observer"))
                 {category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ","");}
+                if (category.equals("world-news")){
+                category = adapter.getItem(position).getCategory().toLowerCase().replaceAll("-news","");
+            }
                 // parse breaks apart the URI string that's passed into its parameter
                 Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
                 // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
@@ -181,7 +184,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
         // Append query parameter and its value. For example, the `page-size=10`
         uriBuilder.appendQueryParameter(Constants.PAGE_SIZE, size);
-        if (!selectedToSwowCategory){buildedUrl =  uriBuilder.toString();}
+        if (!selectedToShowCategory){buildedUrl =  uriBuilder.toString();}
         return new StoryLoader(getActivity(), buildedUrl);
     }
 

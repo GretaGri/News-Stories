@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     DrawerLayout drawerLayout;
     //please add the API key in the gradle.properties like this:
@@ -34,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private String section;
     private String url_without_section;
     private NavigationView navigationView;
+    private Menu menu;
+    private ArrayList<NewsStory> favorite = new ArrayList<>();
+    private String categoryUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +93,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         //set up the navigation menu to open selected news categories and another activities
         navigationView = findViewById(R.id.nav_view);
+
+        menu = navigationView.getMenu();
+
+        menu.getItem(11).setVisible(false);
+        if(!sharedPreferences.getBoolean(getString(R.string.favorite_key),false)){
+            menu.getItem(11).setVisible(false);
+        }else menu.getItem(11).setVisible(true);
+
                 navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -217,6 +231,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 getSupportFragmentManager().beginTransaction()
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
+                            case R.id.favorite:
+                                bundle = new Bundle();
+                                bundle.putParcelableArrayList("Favorite_array_key", favorite);
+                                Log.d("Main activity", "Array list size is : " + favorite.size());
+                                bundle.putString("Category_url_key",categoryUrl );
+                                fragment = new FavoriteFragment();
+                                fragment.setArguments(bundle);
+                                // Add the fragment to the 'fragment_container' FrameLayout
+                                getSupportFragmentManager().beginTransaction()
+                                        .add(R.id.fragment_container, fragment).commit();
+                                break;
                             case R.id.about_application:
                                 Intent about = new Intent(MainActivity.this, AboutApplicationActivity.class);
                                 startActivity(about);
@@ -300,12 +325,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 ||key.equals(getString(R.string.education_key))||key.equals(getString(R.string.travel_key))
                 ||key.equals(getString(R.string.music_key))||key.equals(getString(R.string.art_and_design_key))
                 ||key.equals(getString(R.string.film_key))||key.equals(getString(R.string.fashion_key))
-                ||key.equals(getString(R.string.crosswords_key))) {
+                ||key.equals(getString(R.string.crosswords_key))||key.equals(getString(R.string.favorite_key))) {
             loadmenuFromSharedPreferences(sharedPreferences);
+            Log.d("Main Activity", "shared preferences listener is called : ");
         }
     }
     private void loadmenuFromSharedPreferences(SharedPreferences sharedPreferences) {
-        Menu menu = navigationView.getMenu();
         if(!sharedPreferences.getBoolean(getString(R.string.technology_key),true)){
             menu.getItem(1).setVisible(false);}
             else menu.getItem(1).setVisible(true);
@@ -336,6 +361,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if(!sharedPreferences.getBoolean(getString(R.string.crosswords_key),true)){
             menu.getItem(10).setVisible(false);}
         else menu.getItem(10).setVisible(true);
+        if(sharedPreferences.getBoolean(getString(R.string.favorite_key),false)){
+            menu.getItem(11).setVisible(true);
+            String picture = sharedPreferences.getString("Picture_key","");
+            String category = sharedPreferences.getString("Category_key","");
+            String title = sharedPreferences.getString("Title_key","");
+            String author = sharedPreferences.getString("Author_key","");
+            String date = sharedPreferences.getString("Date_key","");
+            String urlWithDetails = sharedPreferences.getString("Url_key","");
+            categoryUrl = sharedPreferences.getString("Category_url_key","");
+            favorite.add(new NewsStory(picture, category, title, author, date, urlWithDetails));
+            Log.d("Main Activity", "shared preferences array list is updated, size: " + favorite.size());
+        }else menu.getItem(11).setVisible(false);
     }
 
     @Override

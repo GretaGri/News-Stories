@@ -30,7 +30,7 @@
     <string name="drawer_opened">Navigation drawer opened</string>
     <string name="drawer_closed">Navigation drawer closed</string>
 
-   <!--About application page -->
+    <!--About application page -->
     <string name="author_image">Author image</string>
     <string name="about_app_description">Application created by Greta Grigutė as part of
         Google developer Android Basics Nanodegree, 6th project.
@@ -97,4 +97,7 @@
     <string name="dog_reading_news">Dog reading news</string>
     <string name="man_falling">Man falling of the chair</string>
     <string name="illustrative_image">Illustrative image</string>
-    </resources>
+    <string name="favorite">Favorite</string>
+    <string name="favorite_key">Favorite_key</string>
+
+</resources>

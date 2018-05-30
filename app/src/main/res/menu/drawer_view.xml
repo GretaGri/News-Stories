@@ -47,6 +47,10 @@
         <item
             android:id="@+id/crosswords"
             android:title="@string/crosswords" />
+
+        <item
+            android:id="@+id/favorite"
+            android:title="@string/favorite" />
     </group>
     <group
         android:id="@+id/menu_bottom"
