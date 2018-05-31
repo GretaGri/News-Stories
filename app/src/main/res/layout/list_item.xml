@@ -57,10 +57,10 @@
 
         <ImageView
             android:id="@+id/favorite"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_margin="@dimen/margin_medium"
-            android:src="@drawable/outline_grade_black_24dp"
+            android:src="@drawable/yellow_star_empty"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="@id/story_image"
             />

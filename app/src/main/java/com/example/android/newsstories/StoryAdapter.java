@@ -1,6 +1,8 @@
 package com.example.android.newsstories;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +61,16 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         int categoryColor = getCategoryColor(story.getCategory());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             holder.category.setBackgroundTintList(context.getResources().getColorStateList(categoryColor));// Do something for lollipop and above versions
-        }
+
+            if (story.getStarred()){holder.favorite.setImageResource(R.drawable.yellow_star_full);
+            }else holder.favorite.setImageResource(R.drawable.yellow_star_empty);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            //TODO: need to use array because I need all titles that were selected as starred saved. Also, do not forget to remove from favorites when deselected
+            String currentTitle = sharedPreferences.getString("Title_key","");
+            Boolean starred = sharedPreferences.getBoolean("FavoriteSelected_key", false);
+            if (currentTitle.equals(story.getTitle())&&starred){holder.favorite.setImageResource(R.drawable.yellow_star_full);
+            }else holder.favorite.setImageResource(R.drawable.yellow_star_empty);}
     }
 
     @Override

@@ -1,127 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swipe_refresh"
     tools:context="com.example.android.newsstories.MainActivity">
 
     <android.support.constraint.ConstraintLayout
-     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/no_stories_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/no_stories_image"
+        <RelativeLayout
+            android:id="@+id/no_stories_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_small"
-            android:background="@color/colorWhite"
-            android:contentDescription="@string/dog_reading_news"
-            android:scaleType="fitStart"
-            android:src="@drawable/no_news" />
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@color/colorBackground"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/no_stories_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:padding="@dimen/padding_max"
-            android:text="@string/no_stories"
-            android:textColor="@color/colorDarkBlue"
-            android:textSize="@dimen/text_size_message"
-            app:fontFamily="@font/alegreya" />
+            <ImageView
+                android:id="@+id/no_stories_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@color/colorWhite"
+                android:contentDescription="@string/dog_reading_news"
+                android:scaleType="fitStart"
+                android:src="@drawable/no_news" />
 
-        <TextView
-            android:id="@+id/no_stories_poem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/no_stories_source"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorWhite"
-            android:padding="@dimen/padding_medium"
-            android:text="@string/poem"
-            android:textColor="@color/colorDarkBlue"
-            android:textSize="@dimen/text_size_message"
-            app:fontFamily="@font/alegreya" />
+            <TextView
+                android:id="@+id/no_stories_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/padding_max"
+                android:text="@string/no_stories"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="@dimen/text_size_message"
+                app:fontFamily="@font/alegreya" />
 
-        <TextView
-            android:id="@+id/no_stories_source"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="end"
-            android:padding="@dimen/padding_max"
-            android:text="@string/poem_info"
-            android:textColor="@color/colorDarkBlue"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="italic"
-            app:fontFamily="@font/alegreya" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/no_stories_poem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/no_stories_source"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorWhite"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/poem"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="@dimen/text_size_message"
+                app:fontFamily="@font/alegreya" />
 
-    <RelativeLayout
-        android:id="@+id/no_internet_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:background="@color/colorBackground"
-        android:visibility="gone">
+            <TextView
+                android:id="@+id/no_stories_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="end"
+                android:padding="@dimen/padding_max"
+                android:text="@string/poem_info"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="italic"
+                app:fontFamily="@font/alegreya" />
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/no_connection_image"
+        <RelativeLayout
+            android:id="@+id/no_internet_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@id/no_connection_text"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/margin_small"
-            android:contentDescription="@string/man_falling"
-            android:scaleType="fitStart"
-            android:src="@drawable/no_connection" />
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@color/colorBackground"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/no_connection_text"
+            <ImageView
+                android:id="@+id/no_connection_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@id/no_connection_text"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/margin_small"
+                android:contentDescription="@string/man_falling"
+                android:scaleType="fitStart"
+                android:src="@drawable/no_connection" />
+
+            <TextView
+                android:id="@+id/no_connection_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_top_max"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/no_connection"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="@dimen/text_size_title"
+                app:fontFamily="@font/alegreya" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_top_max"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/padding_medium"
-            android:text="@string/no_connection"
-            android:textColor="@color/colorDarkBlue"
-            android:textSize="@dimen/text_size_title"
-            app:fontFamily="@font/alegreya" />
-    </RelativeLayout>
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:clickable="true"
-        android:focusable="true"
-        android:scrollbars="vertical"
-        tools:context=".MainActivity"
-        tools:showIn="@layout/activity_main" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:scrollbars="vertical"
+                tools:context=".MainActivity"
+                tools:showIn="@layout/activity_main" />
 
-    <ProgressBar
-        android:id="@+id/loading_spinner"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_spinner"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

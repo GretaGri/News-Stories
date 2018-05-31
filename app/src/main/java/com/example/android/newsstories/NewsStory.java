@@ -13,14 +13,18 @@ public class NewsStory implements Parcelable {
     private String author;
     private String date;
     private String url;
+    private int starredValue;
+    private boolean starred;
 
-    public NewsStory(String Picture, String Category, String Title, String Author, String Date, String UrlWithDetails) {
+    public NewsStory(String Picture, String Category, String Title, String Author, String Date, String UrlWithDetails, boolean Starred) {
         picture = Picture;
         category = Category;
         title = Title;
         author = Author;
         date = Date;
         url = UrlWithDetails;
+        if (Starred) {starredValue = 1;}
+        else starredValue = 0;
     }
 
     protected NewsStory(Parcel in) {
@@ -30,6 +34,9 @@ public class NewsStory implements Parcelable {
         author = in.readString();
         date = in.readString();
         url = in.readString();
+        starredValue = in.readInt();
+        if (starredValue == 1) {starred = true;
+        }else if(starredValue == 0) {starred = false;}
     }
 
     @Override
@@ -40,6 +47,7 @@ public class NewsStory implements Parcelable {
         dest.writeString(author);
         dest.writeString(date);
         dest.writeString(url);
+        dest.writeInt(starredValue);
     }
 
     @Override
@@ -81,5 +89,12 @@ public class NewsStory implements Parcelable {
 
     public String getUrl() {
         return url;
+    }
+
+    public boolean getStarred() {
+        return starred;
+    }
+    public void setStarred (boolean Starred){
+       starred = Starred;
     }
 }

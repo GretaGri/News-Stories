@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private Menu menu;
     private ArrayList<NewsStory> favorite = new ArrayList<>();
     private String categoryUrl;
+    private Boolean starred = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -369,8 +370,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             String author = sharedPreferences.getString("Author_key","");
             String date = sharedPreferences.getString("Date_key","");
             String urlWithDetails = sharedPreferences.getString("Url_key","");
+            starred = true;
             categoryUrl = sharedPreferences.getString("Category_url_key","");
-            favorite.add(new NewsStory(picture, category, title, author, date, urlWithDetails));
+            favorite.add(new NewsStory(picture, category, title, author, date, urlWithDetails, starred));
             Log.d("Main Activity", "shared preferences array list is updated, size: " + favorite.size());
         }else menu.getItem(11).setVisible(false);
     }
@@ -382,4 +384,5 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
+
 }

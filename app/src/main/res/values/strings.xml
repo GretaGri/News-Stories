@@ -98,6 +98,6 @@
     <string name="man_falling">Man falling of the chair</string>
     <string name="illustrative_image">Illustrative image</string>
     <string name="favorite">Favorite</string>
-    <string name="favorite_key">Favorite_key</string>
+    <string name="favorite_key">FavoriteSelected_key</string>
 
 </resources>

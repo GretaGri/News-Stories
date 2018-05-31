@@ -183,7 +183,7 @@ public class QueryUtils {
 
                 //add those values to arrayList
                 // FOR REVIEWER: comment out this line for checking, how my empty page works:)
-                newsStories.add(new NewsStory(pictureUrl, category, title, author, dateReadyToShow, url));
+                newsStories.add(new NewsStory(pictureUrl, category, title, author, dateReadyToShow, url, false));
             }
 
 

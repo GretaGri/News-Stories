@@ -8,6 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -34,6 +37,7 @@ import java.util.List;
  */
 public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>>,
         StoryAdapter.ListItemClickListener {
+    private static final String BUNDLE_RECYCLER_LAYOUT = "FavoriteFragment.recycler.layout";
     private static final int NEWS_LOADER_ID = 1;
     boolean isWifiConn;
     boolean isMobileConn;
@@ -47,6 +51,7 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
     private RelativeLayout noInternet;
     private String GUARDIAN_REQUEST_URL;
     private String buildedUrl;
+    private Parcelable savedRecyclerLayoutState;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -121,8 +126,9 @@ Log.d("FavoriteFragment", "Array list size is : " + favorite.size());
             case R.id.favorite:
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("Favorite_key",false);
+                    editor.putBoolean(getString(R.string.favorite_key),false);
                     editor.commit();
+
                 favorite.remove(favorite.get(position));
                 adapter.notifyDataSetChanged();
                 break;
@@ -168,12 +174,11 @@ Log.d("FavoriteFragment", "Array list size is : " + favorite.size());
         // data set. This will trigger the ListView to update.
         if (newsStories != null && !newsStories.isEmpty()) {
             adapter = new StoryAdapter(getActivity(), newsStories, this);
-
             loadingSpinner.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(adapter);
-
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
             swipeRefreshLayout.setRefreshing(false);
 
         } else {
@@ -207,5 +212,24 @@ Log.d("FavoriteFragment", "Array list size is : " + favorite.size());
         }
         return isConnected;
     }
+    /**
+     * This is a method for Fragment.
+     * You can do the same in onCreate or onRestoreInstanceState
+     */
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
-}
+        if(savedInstanceState != null)
+        {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+    }
