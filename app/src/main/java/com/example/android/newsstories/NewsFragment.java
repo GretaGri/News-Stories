@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +36,7 @@ import java.util.List;
  */
 public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsStory>>,
         SharedPreferences.OnSharedPreferenceChangeListener, StoryAdapter.ListItemClickListener {
+    private static final String NEWS_ARRAY_lIST = "newsArrayList";
     private static final String BUNDLE_RECYCLER_LAYOUT = "NewsFragment.recycler.layout";
     private static final int NEWS_LOADER_ID = 1;
     boolean isWifiConn;
@@ -54,6 +56,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private String buildedUrl;
     private boolean selectedToShowCategory = false;
     Parcelable savedRecyclerLayoutState;
+    List <NewsStory> newsStories;
+    Bundle savedInstance;
 
 
     public NewsFragment() {
@@ -63,8 +67,13 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savedInstance = savedInstanceState;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        if (savedInstanceState != null) {
+            // Restore value of newsStories from saved state
+            newsStories = savedInstanceState.getParcelableArrayList(NEWS_ARRAY_lIST);
+        }
     }
 
     @Override
@@ -209,7 +218,13 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onLoadFinished(Loader<List<NewsStory>> loader, List<NewsStory> newsStories) {
-        // Clear the adapter of previous news data
+        if (savedInstance != null) {
+            // Restore value of newsStories from saved state
+            newsStories = savedInstance.getParcelableArrayList(NEWS_ARRAY_lIST);
+
+        }
+        this.newsStories = newsStories;
+       // Clear the adapter of previous news data
         adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(), this);
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
@@ -286,14 +301,17 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         if(savedInstanceState != null)
         {
             savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            newsStories = savedInstanceState.getParcelableArrayList(NEWS_ARRAY_lIST);
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        ArrayList <NewsStory> savedArrayList = (ArrayList<NewsStory>) newsStories;
+        outState.putParcelableArrayList(NEWS_ARRAY_lIST,savedArrayList);
         outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+        super.onSaveInstanceState(outState);
     }
 }
 
