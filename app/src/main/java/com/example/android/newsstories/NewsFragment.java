@@ -57,7 +57,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private boolean selectedToShowCategory = false;
     Parcelable savedRecyclerLayoutState;
     List <NewsStory> newsStories;
-    Bundle savedInstance;
+    Bundle savedInstance = null;
 
 
     public NewsFragment() {
@@ -116,8 +116,15 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         } else {
             // add users chosen number of news stories
             size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
-
-            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
+            if (savedInstance == null){
+            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);}
+            else {adapter = new StoryAdapter(getActivity(), newsStories, this);
+                loadingSpinner.setVisibility(View.GONE);
+                empty.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                recyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
+                recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);}
         }
         noInternet.setVisibility(View.GONE);
         empty.setVisibility(View.GONE);
@@ -203,6 +210,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public Loader<List<NewsStory>> onCreateLoader(int id, Bundle args) {
         // parse breaks apart the URI string that's passed into its parameter
+        Log.d("NewsFragment", "on create loader gets called");
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
 
         // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
@@ -297,9 +305,9 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-
+        savedInstance = savedInstanceState;
         if(savedInstanceState != null)
-        {
+        {Log.d("NewsFragment", "on view state restored gets called");
             savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
             newsStories = savedInstanceState.getParcelableArrayList(NEWS_ARRAY_lIST);
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
