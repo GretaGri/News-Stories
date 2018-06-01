@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     //NewsStories_GuardianApiKey="your-key"
     String apiKey = BuildConfig.ApiKey;
     private static final String GUARDIAN_API_URL= "https://content.guardianapis.com/search";
+    private static final String CURRENT_CATEGORY = "current_category";
+    private static final String BUILD_URI = "buid_uri";
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private TextView actionBarTitle;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private ArrayList<NewsStory> favorite = new ArrayList<>();
     private String categoryUrl;
     private Boolean starred = false;
+    private int currentCategory = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         // swap UI fragments
                         switch (menuItem.getItemId()) {
                             case R.id.home:
+                                currentCategory = 0;
                                 bundle = new Bundle();
                                 bundle.putString(Constants.URL_KEY,url_without_section);
                                 fragment = new NewsFragment();
@@ -123,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.technology:
+                                currentCategory = 1;
                                 bundle = new Bundle();
                                 section = Constants.TECHNOLOGY_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -134,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.law:
+                                currentCategory = 2;
                                 bundle = new Bundle();
                                 section = Constants.LAW_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -145,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.science:
+                                currentCategory = 3;
                                 bundle = new Bundle();
                                 section = Constants.SCIENCE_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -156,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.education:
+                                currentCategory = 4;
                                 bundle = new Bundle();
                                 section = Constants.EDUCATION_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -167,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.travel:
+                                currentCategory = 5;
                                 bundle = new Bundle();
                                 section = Constants.TRAVEL_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -178,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.music:
+                                currentCategory = 6;
                                 bundle = new Bundle();
                                 section = Constants.MUSIC_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -189,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.art_and_design:
+                                currentCategory = 7;
                                 bundle = new Bundle();
                                 section = Constants.ART_AND_DESIGN_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -200,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.film:
+                                currentCategory = 8;
                                 bundle = new Bundle();
                                 section = Constants.FILM_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -211,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.fashion:
+                                currentCategory = 9;
                                 bundle = new Bundle();
                                 section = Constants.FASHION_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -222,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.crosswords:
+                                currentCategory = 10;
                                 bundle = new Bundle();
                                 section = Constants.CROSSWORDS_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
@@ -233,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.favorite:
+                                currentCategory = 11;
                                 bundle = new Bundle();
                                 bundle.putParcelableArrayList("Favorite_array_key", favorite);
                                 Log.d("Main activity", "Array list size is : " + favorite.size());
@@ -244,11 +259,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.about_application:
+                                currentCategory = 12;
                                 Intent about = new Intent(MainActivity.this, AboutApplicationActivity.class);
                                 startActivity(about);
                                 break;
 
                             case R.id.settings:
+                                currentCategory = 13;
                                Intent set = new Intent(MainActivity.this, SettingsActivity.class);
                                 startActivity(set);
                                 break;
@@ -383,6 +400,180 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // get shared preferences and unregister shared preferences change listener
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putInt(CURRENT_CATEGORY, currentCategory);
+        savedInstanceState.putString(BUILD_URI, url_without_section);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore state members from saved instance
+        currentCategory = savedInstanceState.getInt(CURRENT_CATEGORY);
+        url_without_section = savedInstanceState.getString(BUILD_URI);
+
+        Uri baseUri = Uri.parse(url_without_section);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        uriBuilder = baseUri.buildUpon();
+
+        switch (currentCategory) {
+            case 0:
+                bundle = new Bundle();
+                bundle.putString(Constants.URL_KEY, url_without_section);
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 1:
+                bundle = new Bundle();
+                section = Constants.TECHNOLOGY_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 2:
+                bundle = new Bundle();
+                section = Constants.LAW_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 3:
+                bundle = new Bundle();
+                section = Constants.SCIENCE_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 4:
+                bundle = new Bundle();
+                section = Constants.EDUCATION_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 5:
+                bundle = new Bundle();
+                section = Constants.TRAVEL_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 6:
+                bundle = new Bundle();
+                section = Constants.MUSIC_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 7:
+                bundle = new Bundle();
+                section = Constants.ART_AND_DESIGN_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 8:
+                bundle = new Bundle();
+                section = Constants.FILM_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 9:
+                bundle = new Bundle();
+                section = Constants.FASHION_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 10:
+                bundle = new Bundle();
+                section = Constants.CROSSWORDS_TAG;
+                uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                bundle.putString(Constants.URL_KEY, uriBuilder.toString());
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 11:
+                bundle = new Bundle();
+                bundle.putParcelableArrayList("Favorite_array_key", favorite);
+                Log.d("Main activity", "Array list size is : " + favorite.size());
+                bundle.putString("Category_url_key", categoryUrl);
+                fragment = new FavoriteFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+            case 12:
+                Intent about = new Intent(MainActivity.this, AboutApplicationActivity.class);
+                startActivity(about);
+                break;
+
+            case 13:
+                Intent set = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(set);
+                break;
+
+            default:
+                bundle = new Bundle();
+                bundle.putString(Constants.URL_KEY, url_without_section);
+                fragment = new NewsFragment();
+                fragment.setArguments(bundle);
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, fragment).commit();
+                break;
+        }
     }
 
 }

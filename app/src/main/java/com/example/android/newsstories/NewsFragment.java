@@ -104,6 +104,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         recyclerView.setAdapter(adapter);
+        recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+
         // Find a reference to the no stories layout {@link RelativeLayout} in the layout
         empty = rootView.findViewById(R.id.no_stories_layout);
         noInternet = rootView.findViewById(R.id.no_internet_layout);
@@ -117,7 +119,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             // add users chosen number of news stories
             size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
             if (savedInstance == null){
-            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);}
+                getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);}
             else {adapter = new StoryAdapter(getActivity(), newsStories, this);
                 loadingSpinner.setVisibility(View.GONE);
                 empty.setVisibility(View.GONE);
@@ -226,24 +228,24 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onLoadFinished(Loader<List<NewsStory>> loader, List<NewsStory> newsStories) {
-        if (savedInstance != null) {
-            // Restore value of newsStories from saved state
-            newsStories = savedInstance.getParcelableArrayList(NEWS_ARRAY_lIST);
-
-        }
         this.newsStories = newsStories;
-       // Clear the adapter of previous news data
+        // Clear the adapter of previous news data
         adapter = new StoryAdapter(getActivity(), new ArrayList<NewsStory>(), this);
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (newsStories != null && !newsStories.isEmpty()) {
+            if (savedInstance != null) {
+                // Restore value of newsStories from saved state
+                newsStories = savedInstance.getParcelableArrayList(NEWS_ARRAY_lIST);
+
+            }
             adapter = new StoryAdapter(getActivity(), newsStories, this);
             loadingSpinner.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(adapter);
             swipeRefreshLayout.setRefreshing(false);
-         recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
 
         } else {
             if (!isInternetConn()) {
