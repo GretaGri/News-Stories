@@ -300,6 +300,16 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        savedInstance = savedInstanceState;
+        {Log.d("NewsFragment", "on view state restored gets called");
+//            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+ //           newsStories = savedInstanceState.getParcelableArrayList(NEWS_ARRAY_lIST);
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
+    }
     /**
      * This is a method for Fragment.
      * You can do the same in onCreate or onRestoreInstanceState

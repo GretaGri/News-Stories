@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private Boolean starred = false;
     private int currentCategory = 0;
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
 
         actionBarTitle = findViewById(R.id.custom_title);
 
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
 
         url_without_section = uriBuilder.toString();
+
 
         //Add fragment to fill first page when app opens - later might be replaced stared/bookmarked news
         bundle = new Bundle();
@@ -170,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
                                 fragment = new NewsFragment();
                                 fragment.setArguments(bundle);
-                                // Add the fragment to the 'fragment_container' FrameLayout
+                               // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
@@ -247,7 +251,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.favorite:
-                                currentCategory = 11;
                                 bundle = new Bundle();
                                 bundle.putParcelableArrayList("Favorite_array_key", favorite);
                                 Log.d("Main activity", "Array list size is : " + favorite.size());
@@ -259,13 +262,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                         .add(R.id.fragment_container, fragment).commit();
                                 break;
                             case R.id.about_application:
-                                currentCategory = 12;
                                 Intent about = new Intent(MainActivity.this, AboutApplicationActivity.class);
                                 startActivity(about);
                                 break;
 
                             case R.id.settings:
-                                currentCategory = 13;
                                Intent set = new Intent(MainActivity.this, SettingsActivity.class);
                                 startActivity(set);
                                 break;
@@ -350,7 +351,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
     private void loadmenuFromSharedPreferences(SharedPreferences sharedPreferences) {
         if(!sharedPreferences.getBoolean(getString(R.string.technology_key),true)){
-            menu.getItem(1).setVisible(false);}
+            menu.getItem(1).setVisible(false);
+        }
             else menu.getItem(1).setVisible(true);
         if(!sharedPreferences.getBoolean(getString(R.string.law_key),true)){
             menu.getItem(2).setVisible(false);}
@@ -403,11 +405,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
         savedInstanceState.putInt(CURRENT_CATEGORY, currentCategory);
         savedInstanceState.putString(BUILD_URI, url_without_section);
-
-        // Always call the superclass so it can save the view hierarchy state
+                // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -543,26 +543,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_container, fragment).commit();
                 break;
-            case 11:
-                bundle = new Bundle();
-                bundle.putParcelableArrayList("Favorite_array_key", favorite);
-                Log.d("Main activity", "Array list size is : " + favorite.size());
-                bundle.putString("Category_url_key", categoryUrl);
-                fragment = new FavoriteFragment();
-                fragment.setArguments(bundle);
-                // Add the fragment to the 'fragment_container' FrameLayout
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragment_container, fragment).commit();
-                break;
-            case 12:
-                Intent about = new Intent(MainActivity.this, AboutApplicationActivity.class);
-                startActivity(about);
-                break;
-
-            case 13:
-                Intent set = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(set);
-                break;
 
             default:
                 bundle = new Bundle();
@@ -573,7 +553,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_container, fragment).commit();
                 break;
+
         }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        loadmenuFromSharedPreferences(sharedPreferences);
     }
 
 }
