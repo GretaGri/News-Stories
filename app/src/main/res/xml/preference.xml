@@ -96,5 +96,13 @@
             android:key="@string/pref_number_key"
             android:title="@string/pref_number_title"
             android:inputType="number" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_order_by_default_value"
+            android:entries="@array/pref_order_by_titles"
+            android:entryValues="@array/pref_order_by_values"
+            android:key="@string/pref_order_by_key"
+            android:title="@string/order_by_title"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

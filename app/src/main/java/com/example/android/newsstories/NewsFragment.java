@@ -7,9 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -25,10 +23,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,9 +54,15 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     Parcelable savedRecyclerLayoutState;
     List <NewsStory> newsStories;
     Bundle savedInstance = null;
+    ICallBack ic;
+
+    public NewsFragment(ICallBack ic,String buildedUrl){
+        this.buildedUrl=buildedUrl;
+        this.ic = ic;
+    }
 
 
-    public NewsFragment() {
+   public NewsFragment() {
         // Required empty public constructor
     }
 
@@ -70,10 +72,11 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         savedInstance = savedInstanceState;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        if (savedInstanceState != null) {
-            // Restore value of newsStories from saved state
-            newsStories = savedInstanceState.getParcelableArrayList(NEWS_ARRAY_lIST);
-        }
+
+        if (ic != null) {
+            // Restore value of newsStories from Activity
+            newsStories = getArguments().getParcelableArrayList(Constants.ARRAY_LIST_KEY);
+            }
     }
 
     @Override
@@ -118,7 +121,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         } else {
             // add users chosen number of news stories
             size = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
-            if (savedInstance == null){
+            if (newsStories== null){
                 getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);}
             else {adapter = new StoryAdapter(getActivity(), newsStories, this);
                 loadingSpinner.setVisibility(View.GONE);
@@ -313,7 +316,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     /**
      * This is a method for Fragment.
      * You can do the same in onCreate or onRestoreInstanceState
-     */
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -325,12 +328,19 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
     }
+     */
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         ArrayList <NewsStory> savedArrayList = (ArrayList<NewsStory>) newsStories;
         outState.putParcelableArrayList(NEWS_ARRAY_lIST,savedArrayList);
         outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+        new Thread(new Runnable(){
+            public void run(){
+                // some calculation
+                ic.callback(newsStories);
+            }
+        }).start();
         super.onSaveInstanceState(outState);
     }
 }

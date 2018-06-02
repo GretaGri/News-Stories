@@ -20,8 +20,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, ICallBack {
     DrawerLayout drawerLayout;
     //please add the API key in the gradle.properties like this:
     //NewsStories_GuardianApiKey="your-key"
@@ -43,10 +44,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private String categoryUrl;
     private Boolean starred = false;
     private int currentCategory = 0;
+    private List<NewsStory> savedList;
 
-
-
-
+    @Override
+    public void callback(List<NewsStory> savedList){
+        this.savedList = savedList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         //Add fragment to fill first page when app opens - later might be replaced stared/bookmarked news
         bundle = new Bundle();
         bundle.putString(Constants.URL_KEY,url_without_section);
-        fragment = new NewsFragment();
+        fragment = new NewsFragment(this,url_without_section);
         fragment.setArguments(bundle);
         // Add the fragment to the 'fragment_container' FrameLayout
         getSupportFragmentManager().beginTransaction()
@@ -124,8 +127,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 currentCategory = 0;
                                 bundle = new Bundle();
                                 bundle.putString(Constants.URL_KEY,url_without_section);
-                                fragment = new NewsFragment();
-                                fragment.setArguments(bundle);
+                                bundle.putParcelableArrayList(Constants.ARRAY_LIST_KEY,(ArrayList<NewsStory>) savedList);
+                                fragment = new NewsFragment(MainActivity.this,url_without_section);
+                               fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
                                         .add(R.id.fragment_container, fragment).commit();
@@ -136,8 +140,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.TECHNOLOGY_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
-                                fragment.setArguments(bundle);
+                                bundle.putParcelableArrayList(Constants.ARRAY_LIST_KEY,(ArrayList<NewsStory>) savedList);
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
+                               fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
                                         .add(R.id.fragment_container, fragment).commit();
@@ -148,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.LAW_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                bundle.putParcelableArrayList(Constants.ARRAY_LIST_KEY,(ArrayList<NewsStory>) savedList);
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -159,8 +165,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 bundle = new Bundle();
                                 section = Constants.SCIENCE_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
+                                bundle.putParcelableArrayList(Constants.ARRAY_LIST_KEY,(ArrayList<NewsStory>) savedList);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -172,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.EDUCATION_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -184,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.TRAVEL_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -196,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.MUSIC_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -208,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.ART_AND_DESIGN_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -220,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.FILM_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -232,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.FASHION_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -244,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                                 section = Constants.CROSSWORDS_TAG;
                                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -274,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             default:
                                 bundle = new Bundle();
                                 bundle.putString(Constants.URL_KEY, url_without_section);
-                                fragment = new NewsFragment();
+                                fragment = new NewsFragment(MainActivity.this,url_without_section);
                                 fragment.setArguments(bundle);
                                 // Add the fragment to the 'fragment_container' FrameLayout
                                 getSupportFragmentManager().beginTransaction()
@@ -426,8 +433,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         switch (currentCategory) {
             case 0:
                 bundle = new Bundle();
-                bundle.putString(Constants.URL_KEY, url_without_section);
-                fragment = new NewsFragment();
+                if (savedList != null){
+                    bundle.putParcelableArrayList(Constants.ARRAY_LIST_KEY,(ArrayList<NewsStory>) savedList);
+                }else {
+                bundle.putString(Constants.URL_KEY, url_without_section);}
+                fragment = new NewsFragment(MainActivity.this,url_without_section);
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -435,10 +445,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 break;
             case 1:
                 bundle = new Bundle();
-                section = Constants.TECHNOLOGY_TAG;
+                if (savedList != null){
+                    bundle.putParcelableArrayList(Constants.ARRAY_LIST_KEY,(ArrayList<NewsStory>) savedList);
+                }else {
+                section = Constants.TECHNOLOGY_TAG;}
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -449,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.LAW_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -460,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.SCIENCE_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -471,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.EDUCATION_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -482,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.TRAVEL_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -493,7 +506,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.MUSIC_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -504,7 +517,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.ART_AND_DESIGN_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -515,7 +528,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.FILM_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -526,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.FASHION_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -537,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 section = Constants.CROSSWORDS_TAG;
                 uriBuilder.appendQueryParameter(Constants.SECTION, section);
                 bundle.putString(Constants.URL_KEY, uriBuilder.toString());
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()
@@ -547,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             default:
                 bundle = new Bundle();
                 bundle.putString(Constants.URL_KEY, url_without_section);
-                fragment = new NewsFragment();
+                fragment = new NewsFragment(MainActivity.this,uriBuilder.toString());
                 fragment.setArguments(bundle);
                 // Add the fragment to the 'fragment_container' FrameLayout
                 getSupportFragmentManager().beginTransaction()

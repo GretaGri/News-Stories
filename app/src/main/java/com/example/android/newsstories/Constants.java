@@ -39,4 +39,5 @@ public final class Constants {
     public static final String NO_AUTHOR = "no author";
     public static final String SECTION = "section";
     public static final String PAGE_SIZE = "page-size";
+    public static final String ARRAY_LIST_KEY = "array_list_key";
 }

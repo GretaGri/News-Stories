@@ -76,7 +76,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return newsStories.size();
+        if (newsStories !=null){
+        return newsStories.size();}
+        else return 0;
     }
 
     public NewsStory getItem(int position) {
