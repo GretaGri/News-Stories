@@ -97,4 +97,10 @@
     <string name="dog_reading_news">Dog reading news</string>
     <string name="man_falling">Man falling of the chair</string>
     <string name="illustrative_image">Illustrative image</string>
-    </resources>
+    <string name="select_between_1_50">Please, select a number between 1 and 50</string>
+    <string name="querry_parameter_format_value" translatable="false">json</string>
+    <string name="querry_parameter_from_date_value" translatable="false">2018-01-01</string>
+    <string name="querry_parameter_show_tags_value" translatable="false">contributor</string>
+    <string name="querry_parameter_show_fields_value" translatable="false">thumbnail</string>
+    <string name="querry_parameter_order_by_value" translatable="false">newest</string>
+</resources>

@@ -55,15 +55,6 @@
             card_view:layout_constraintTop_toTopOf="@id/story_image"
             tools:text="Fashion" />
 
-        <ImageView
-            android:id="@+id/favorite"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="@dimen/margin_medium"
-            android:src="@drawable/outline_grade_black_24dp"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="@id/story_image"
-            />
 
         <TextView
             android:id="@+id/story_title"

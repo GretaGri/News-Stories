@@ -15,11 +15,9 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -45,7 +43,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private String size;
     private SharedPreferences sharedPreferences;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean starred = false;
     private String buildedUrl;
     private boolean selectedToSwowCategory = false;
 
@@ -122,46 +119,32 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
                     startActivity(intent);
                 }
                 break;
-            case R.id.favorite:
-                ImageView star = view.findViewById(R.id.favorite);
-                if (!starred){
-                star.setImageResource(R.drawable.baseline_grade_black_24dp);
-                starred = true;
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Category_key",adapter.getItem(position).getCategory());
-                editor.putString("Author_key",adapter.getItem(position).getAuthor());
-                editor.putString("Title_key",adapter.getItem(position).getTitle());
-                editor.putString("Date_key",adapter.getItem(position).getDate());
-                editor.putString("Picture_key",adapter.getItem(position).getPicture());
-                editor.putString("Url_key",adapter.getItem(position).getUrl());
-                editor.putBoolean("Favorite_key",true);
-                editor.commit();
-                }else {
-                    star.setImageResource(R.drawable.outline_grade_black_24dp);
-                    starred = false;
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("Favorite_key",false);
-                    editor.commit();
-                }
-
-                break;
             case R.id.category:
                 selectedToSwowCategory = true;
-                String category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ","-");
-                if (category.equals("art-and-design")||category.equals("commentis-free")||category.equals("jobs-advice")||category.equals("life-and-style")||category.equals("the-guardian")||category.equals("the-observer"))
-                {category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ","");}
+                String category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ", "-");
+                if (category.equals("art-and-design") || category.equals("commentis-free") || category.equals("jobs-advice") || category.equals("life-and-style") || category.equals("the-guardian") || category.equals("the-observer")) {
+                    category = adapter.getItem(position).getCategory().toLowerCase().replaceAll(" ", "");
+                }
+                if (category.equals("world-news")) {
+                    category = "world";
+                }
+                if (category.equals("television-&-radio")) {
+                    category = "tv-and-radio";
+                }
+                if (category.equals("opinion")) {
+                    category = "commentisfree";
+                }
                 // parse breaks apart the URI string that's passed into its parameter
                 Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
                 // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
-               Uri.Builder uriBuilder = baseUri.buildUpon();
-               uriBuilder.appendQueryParameter(Constants.SECTION,category);
-               buildedUrl = uriBuilder.toString();
-               getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
-                Log.d ("NewsFragment", "Onclick works, string is: "+ category);
+                Uri.Builder uriBuilder = baseUri.buildUpon();
+                uriBuilder.appendQueryParameter(Constants.SECTION, category);
+                buildedUrl = uriBuilder.toString();
+                getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
                 break;
 
             default:
-               url = adapter.getItem(position).getUrl();
+                url = adapter.getItem(position).getUrl();
                 if (url != null) {
                     Intent intent = new Intent(Intent.ACTION_VIEW,
                             Uri.parse(url));
@@ -177,11 +160,13 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
 
         // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
-       Uri.Builder uriBuilder = baseUri.buildUpon();
+        Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Append query parameter and its value. For example, the `page-size=10`
         uriBuilder.appendQueryParameter(Constants.PAGE_SIZE, size);
-        if (!selectedToSwowCategory){buildedUrl =  uriBuilder.toString();}
+        if (!selectedToSwowCategory) {
+            buildedUrl = uriBuilder.toString();
+        }
         return new StoryLoader(getActivity(), buildedUrl);
     }
 
@@ -236,7 +221,6 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_number_key))) {
             loadNumberOfNewsFromSharedPreferences(sharedPreferences);
-            Log.d("Newsfragment", "onsharedpreferences change listener gets called");
         }
     }
 

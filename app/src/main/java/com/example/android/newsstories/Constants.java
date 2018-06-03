@@ -4,7 +4,6 @@ package com.example.android.newsstories;
  * Created by Greta Grigutė on 2018-05-11.
  */
 public final class Constants {
-    public static final String POSITION = "position";
     public static final String URL_KEY = "key";
     public static final String RESPONSE = "response";
     public static final String RESULTS = "results";
@@ -39,4 +38,14 @@ public final class Constants {
     public static final String NO_AUTHOR = "no author";
     public static final String SECTION = "section";
     public static final String PAGE_SIZE = "page-size";
+    public static final String QUERRY_PARAMETER_FORMAT = "format";
+    public static final String QUERRY_PARAMETER_FROM_DATE = "from-date";
+    public static final String QUERRY_PARAMETER_SHOW_TAGS = "show-tags";
+    public static final String QUERRY_PARAMETER_SHOW_FIELDS = "show-fields";
+    public static final String QUERRY_PARAMETER_ORDER_BY = "order-by";
+    public static final String QUERRY_PARAMETER_API_KEY = "api-key";
+    public static final String GUARDIAN_API_URL = "https://content.guardianapis.com/search";
+    public static final String CURRENT_CATEGORY = "current_category";
+    public static final String BUILD_URI = "buid_uri";
+
 }

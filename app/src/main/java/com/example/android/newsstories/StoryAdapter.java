@@ -4,9 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -123,7 +121,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         public ImageView picture;
         public TextView date;
         public AppCompatButton category;
-        public ImageView favorite;
         public CardView cardView;
 
         public MyViewHolder(View view) {
@@ -134,8 +131,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
             date = view.findViewById(R.id.story_date);
             category = view.findViewById(R.id.category);
             category.setOnClickListener(this);
-            favorite =  view.findViewById(R.id.favorite);
-            favorite.setOnClickListener(this);
             cardView = view.findViewById(R.id.cardview);
             cardView.setOnClickListener(this);
         }

@@ -1,6 +1,5 @@
 package com.example.android.newsstories;
 
-import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -155,7 +154,7 @@ public class QueryUtils {
                 Date dateformatted = null;
                 try {
                     dateformatted = simpleDateFormat.parse(date);
-                }catch (ParseException e){
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 String dateReadyToShow = formatDate(dateformatted);
@@ -163,22 +162,25 @@ public class QueryUtils {
                 String title = current.getString(Constants.WEB_TITLE);
                 String url = current.getString(Constants.WEB_URL);
                 JSONObject fields = null;
-               try {fields = current.getJSONObject(Constants.FIELDS);}
-               catch (JSONException e){
-                   Log.e(LOG_TAG, "Parsing problem, no value for Fields, default picture will be shown");
-               }
+                try {
+                    fields = current.getJSONObject(Constants.FIELDS);
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, "Parsing problem, no value for Fields, default picture will be shown");
+                }
                 String pictureUrl;
-                if (fields!=null){
-                pictureUrl = fields.getString(Constants.THUMBNAIL);}
-                else {pictureUrl = Constants.NO_PICTURE;}
+                if (fields != null) {
+                    pictureUrl = fields.getString(Constants.THUMBNAIL);
+                } else {
+                    pictureUrl = Constants.NO_PICTURE;
+                }
 
                 JSONArray tags = current.getJSONArray(Constants.TAGS);
 
                 String author;
-                if(tags.length()>0){
+                if (tags.length() > 0) {
                     JSONObject currentTag = tags.getJSONObject(0);
-                    author = currentTag.getString(Constants.WEB_TITLE);}
-                    else author = Constants.NO_AUTHOR;
+                    author = currentTag.getString(Constants.WEB_TITLE);
+                } else author = Constants.NO_AUTHOR;
 
 
                 //add those values to arrayList
@@ -197,9 +199,11 @@ public class QueryUtils {
         // Return the list of news
         return newsStories;
     }
-    private static String formatDate (Date date){
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MMM dd, yyyy'\n'hh:mm:ss",Locale.UK);
+
+    private static String formatDate(Date date) {
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("MMM dd, yyyy'\n'hh:mm:ss", Locale.UK);
         newDateFormat.setTimeZone(TimeZone.getDefault());
         String formattedDate = newDateFormat.format(date);
-        return formattedDate;}
+        return formattedDate;
+    }
 }

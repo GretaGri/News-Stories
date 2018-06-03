@@ -18,4 +18,7 @@
     <dimen name="picture_height_about_app">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_max_top_bottom">30dp</dimen>
+    <dimen name="margin_bottom_preferences">6dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="margin_top_preferences">6dp</dimen>
 </resources>

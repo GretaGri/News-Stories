@@ -3,17 +3,11 @@ package com.example.android.newsstories;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -29,25 +23,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         checkBoxPreference.setOnPreferenceChangeListener(this);
         android.support.v7.preference.EditTextPreference editTextPreference = (android.support.v7.preference.EditTextPreference) getPreferenceManager().findPreference(getString(R.string.pref_number_key));
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String number = sharedPreferences.getString(getString(R.string.pref_number_key),getString(R.string.pref_number_default_value));
-        setPreferenceSummary(editTextPreference,number);
+        String number = sharedPreferences.getString(getString(R.string.pref_number_key), getString(R.string.pref_number_default_value));
+        setPreferenceSummary(editTextPreference, number);
         editTextPreference.setOnPreferenceChangeListener(this);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        Toast error = Toast.makeText(getContext(),"Please, select a number between 1 and 50",Toast.LENGTH_SHORT);
+        Toast error = Toast.makeText(getContext(), R.string.select_between_1_50, Toast.LENGTH_SHORT);
         String numberKey = getString(R.string.pref_number_key);
-        if (preference.getKey().equals(numberKey)){String numberSize = (String) newValue;
-        try { int number = Integer.parseInt(numberSize);
-                if (number < 1 || number > 50){
+        if (preference.getKey().equals(numberKey)) {
+            String numberSize = (String) newValue;
+            try {
+                int number = Integer.parseInt(numberSize);
+                if (number < 1 || number > 50) {
                     error.show();
                     return false;
                 }
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 error.show();
                 return false;
-            }setPreferenceSummary(preference,numberSize);
+            }
+            setPreferenceSummary(preference, numberSize);
         } else {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             boolean isEnabled = sharedPreferences.getBoolean(getString(R.string.show_all), true);
@@ -70,7 +67,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             CheckBoxPreference checkBoxPreference9 = (CheckBoxPreference) getPreferenceScreen().findPreference(getString(R.string.fashion_key));
             checkBoxPreference9.setChecked(!isEnabled);
             CheckBoxPreference checkBoxPreference10 = (CheckBoxPreference) getPreferenceScreen().findPreference(getString(R.string.crosswords_key));
-            checkBoxPreference10.setChecked(!isEnabled);}
+            checkBoxPreference10.setChecked(!isEnabled);
+        }
         return true;
     }
 
