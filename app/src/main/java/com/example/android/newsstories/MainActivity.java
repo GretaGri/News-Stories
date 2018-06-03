@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
         actionBarTitle = findViewById(R.id.custom_title);
 
         //Set up navigation drawer
@@ -56,8 +55,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         activityTitle = getTitle().toString();
         setupDrawer();
+
+        navigationView = findViewById(R.id.nav_view);
+
         // get shared preferences and register shared preferences change listener
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        loadmenuFromSharedPreferences(sharedPreferences);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         // parse breaks apart the URI string that's passed into its parameter
         Uri baseUri = Uri.parse(Constants.GUARDIAN_API_URL);
@@ -86,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .add(R.id.fragment_container, fragment).commit();
 
         //set up the navigation menu to open selected news categories and another activities
-        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
